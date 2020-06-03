@@ -13,6 +13,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
 import { MaterialModule } from '../../material/material/material.module';
+import { SupplierComponent } from 'app/supplier/supplier.component';
 
 
 
@@ -33,6 +34,7 @@ import { MaterialModule } from '../../material/material/material.module';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    SupplierComponent,
   ]
 })
 
