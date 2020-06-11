@@ -4,51 +4,104 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Supplier } from '../models/supplier';
 import { SupplierService } from '../services/supplier.service';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { Lookup } from '../models/Lookup';
 
-export const supplier: Supplier[] = [{RaisonSocial:'soc', Nom:'aida',Prenom:'Athamnia',Status:1,FraisGeneraux:12,Solde:122}];
+
 
 @Component({
-  selector: 'app-supplier',
-  templateUrl: './supplier.component.html',
-  styleUrls: ['./supplier.component.css']
+    selector: 'app-supplier',
+    templateUrl: './supplier.component.html',
+    styleUrls: ['./supplier.component.css']
 })
+
 export class SupplierComponent implements OnInit {
 
-    public displayedColumns = ['Nom','RaisonSocial','FraisGeneraux','details','update','delete'];
-  public dataSource = new MatTableDataSource<Supplier>(supplier);
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    public displayedColumns = ['Id', 'RaisonSocial', 'Prenom', 'Nom', 'FraisGeneraux', 'EstMorale', 'EstPhysique', 'Solde', 'details'];
+    public dataSource = new MatTableDataSource<Supplier>();
+    totalFraisGeneraux: number;
+    totalSolde: number;
+    pipe: DatePipe;
+    fournisseurs: Supplier[];
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+    // for autocomplete input
+    myControl = new FormControl();
+    filteredOptions: Observable<Lookup[]>;
+    lstSuppliers: Lookup[];
 
-  
-  constructor(private supplierService: SupplierService) { }
+    filterForm = new FormGroup({
+        fromDate: new FormControl(),
+        toDate: new FormControl(),
+    });
 
-  ngOnInit() {
-    // this.getAllOwners();
-      this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
- 
-  public getAllOwners = () => {
-      this.dataSource.data = supplier;
+    get fromDate() { return this.filterForm.get('fromDate').value; }
+    get toDate() { return this.filterForm.get('toDate').value; }
 
-    // this.supplierService.getAll()
-    // .subscribe(res => {
-    //   this.dataSource.data = res as Supplier[];
-    // })
-  }
+    constructor(private supplierService: SupplierService, private router: Router) {
 
-  
+        this.pipe = new DatePipe('en');
+        this.dataSource.filterPredicate = (data, filter) => {
+            if (this.fromDate && this.toDate) {
+                return new Date(data.EcheanceDate) >= this.fromDate && new Date(data.EcheanceDate) <= this.toDate;
+            }
+            return true;
+        }
+    }
 
-  public customSort = (event) => {
-    console.log(event);
-  }
+    ngOnInit() {
+        this.getAllOwners();
+        this.supplierService.getLookupFournisseur().subscribe((res) => {
+            this.lstSuppliers = res.map((item: { Id: number; Designation: string; }) => new Lookup(item.Id, item.Designation));
+        });
 
-  public doFilter = (value: string) => {
-    this.dataSource.filter = value.trim().toLocaleLowerCase();
-  }
- 
-  public redirectToDetails = (id: string) => {
-    
-  }
+        this.filteredOptions = this.myControl.valueChanges
+            .pipe(
+                map(value => this._filter(value))
+            );
+    }
+    applyFilterDate() {
+        this.dataSource.filter = '' + Math.random();
+    }
+    public getAllOwners = () => {
+        this.supplierService.getAll()
+            .subscribe(res => {
+                console.log(res);
+                this.fournisseurs = res;
+                this.dataSource.data = res as Supplier[];
+            });
+    }
+    // tslint:disable-next-line:use-life-cycle-interface
+    ngAfterViewInit(): void {
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+    }
+
+    TotalFraisGeneraux() {
+        return this.dataSource.filteredData.map(t => t.FraisGeneraux).reduce((acc, value) => acc + value, 0);
+    }
+    TotalSolde() {
+        return this.dataSource.filteredData.map(t => t.Solde).reduce((acc, value) => acc + value, 0);
+    }
+
+    public customSort = (event) => {
+        console.log(event);
+    }
+    public redirectToDetails = (Id: string) => {
+        this.router.navigate(['/facture'], { queryParams: { Id: Id } });
+    }
+    // autocomplete filter treatment
+    private _filter(value: string): Lookup[] {
+        const filterValue = value.toLowerCase();
+        if (this.lstSuppliers !== undefined) {
+            this.dataSource = new MatTableDataSource(this.fournisseurs.filter(e => e.Nom.toLowerCase().includes(filterValue)));
+            return this.lstSuppliers.filter(option => option.Designation.toLowerCase().includes(filterValue));
+        }
+    }
 }

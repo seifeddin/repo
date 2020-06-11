@@ -25,8 +25,12 @@ export class SidebarService {
         },
         {
             title: 'Generation',
-            path: '/user-profile'
-          }
+            path: '/reglement'
+          },
+          {
+              title: 'Facture',
+              path: '/facture'
+          },
       ]
     }
   ];

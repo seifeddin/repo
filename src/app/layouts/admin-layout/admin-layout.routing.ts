@@ -9,6 +9,8 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { SupplierComponent } from '../../supplier/supplier.component';
+import { FactureComponent } from '../../facture/facture.component';
+import { ReglementComponent } from '../../reglement/reglement.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -55,11 +57,13 @@ export const AdminLayoutRoutes: Routes = [
     // }
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
-     {path:'supplier',        component:SupplierComponent},
+     {path: 'supplier',        component:SupplierComponent},
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
+    { path: 'facture',        component: FactureComponent },
+    { path: 'reglement',        component: ReglementComponent },
 ];

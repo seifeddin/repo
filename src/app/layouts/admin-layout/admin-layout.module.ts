@@ -13,7 +13,9 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
 import { MaterialModule } from '../../material/material/material.module';
-import { SupplierComponent } from 'app/supplier/supplier.component';
+import { SupplierComponent } from '../../supplier/supplier.component';
+import { FactureComponent } from '../../facture/facture.component';
+import { ReglementComponent } from '../../reglement/reglement.component';
 
 
 
@@ -35,6 +37,8 @@ import { SupplierComponent } from 'app/supplier/supplier.component';
     NotificationsComponent,
     UpgradeComponent,
     SupplierComponent,
+    FactureComponent,
+    ReglementComponent,
   ]
 })
 

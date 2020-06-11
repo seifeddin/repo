@@ -1,0 +1,8 @@
+[0603/155017.899:ERROR:process_info.cc(359)] UncheckedAllocate
+[0603/155017.899:ERROR:process_info.cc(359)] UncheckedAllocate
+[0603/155433.890:ERROR:process_info.cc(359)] UncheckedAllocate
+[0603/155446.407:ERROR:process_info.cc(359)] UncheckedAllocate
+[0603/155455.554:ERROR:process_info.cc(359)] UncheckedAllocate
+[0603/161808.936:ERROR:process_info.cc(359)] UncheckedAllocate
+[0603/162612.796:ERROR:process_info.cc(359)] UncheckedAllocate
+[0603/162616.084:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\SEIFEDDINE-PC\AppData\Local\Google\Chrome\User Data\Crashpad\reports\e21abc14-5df8-4692-91ba-9f1965dab99f.dmp: Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus. (0x20)
