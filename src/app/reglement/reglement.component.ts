@@ -35,30 +35,18 @@ export class ReglementComponent implements OnInit {
         { Id: 2, Echeance: new Date('01/06/2019'), IdModeReglement: 2, IdCaisse: 1, IdBanque: 2, Montant: 200, IdReglement: 1 }];
     // tslint:disable-next-line:member-ordering
     modeReglementControl = new FormControl('', Validators.required);
-    modeReglement: Lookup[] = [
-        { Id: 1, Designation: 'CHEQUE' },
-        { Id: 2, Designation: 'ESPECE' },
-    ];
-    caisses: Lookup[] = [
-        { Id: 1, Designation: 'CaisseTunis' },
-        { Id: 2, Designation: 'CaisseSousse' },
-    ];
-
-    banques: Lookup[] = [
-        { Id: 1, Designation: 'UBCI' },
-        { Id: 2, Designation: 'BIAT' },
-        { Id: 2, Designation: 'BTE' },
-        { Id: 2, Designation: 'ATB' }
-    ];
-    data: ReglementDetail;
+    modeReglement: Lookup[];
+    caisses: Lookup[];
+    banques: Lookup[];
+    regDetail: ReglementDetail;
 
     constructor(public dialogRef: MatDialogRef<ReglementComponent>, private service: ReglementService,
-        @Inject(MAT_DIALOG_DATA) public params: ReglementPrams, private alertService: SweetAlertService,
+        @Inject(MAT_DIALOG_DATA) public data: ReglementPrams, private alertService: SweetAlertService,
         private toastService: NotificationService) {
 
     }
     ngOnInit(): void {
-        this.data = new ReglementDetail();
+        this.regDetail = new ReglementDetail();
 
         this.formGroup = new FormGroup({
             Echeance: new FormControl(),
@@ -70,16 +58,22 @@ export class ReglementComponent implements OnInit {
         });
         this.formGroup.disable();
 
-        this.data.Echeance = new Date();
-        this.data.Montant = 0;
-        this.datasource.data = this.reglements;
+        this.service.getLookupModeReglement().subscribe(x => { this.modeReglement = x });
+        this.service.getLookupBanque().subscribe(x => { this.banques = x });
+        this.service.getLookupCaisse().subscribe(x => { this.caisses = x });
+
+        this.regDetail.Echeance = new Date();
+        this.regDetail.IdReglement = this.data.IdReglement;
+        this.regDetail.Montant = 0;
+        this.service.Get(this.data.IdReglement).subscribe(x => this.datasource.data = x);
 
     }
+    
     addNew() {
         this.formGroup.enable();
         this.edit = 'Create';
-        this.data = new ReglementDetail();
-
+        this.regDetail = new ReglementDetail();
+        this.regDetail.IdReglement = this.data.IdReglement;
     }
 
     submit(): void { }
@@ -95,15 +89,17 @@ export class ReglementComponent implements OnInit {
         }).then((result) => {
             if (result.value) {
                 if (this.edit === 'Create') {
-                    this.service.Add(this.data);
+                    this.service.Add(this.regDetail).subscribe(x => {
+
+                        Swal.fire(
+                            'Enregistrement règlement effectué avec succés',
+                            'success'
+                        )
+                    });
                 }
                 if (this.edit === 'Edit') {
-                    this.service.Edit(this.data);
+                    this.service.Edit(this.regDetail);
                 }
-                Swal.fire(
-                    'Enregistrement règlement effectué avec succés',
-                    'success'
-                )
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire(
                     'Enregistrement Annulé',
@@ -120,7 +116,6 @@ export class ReglementComponent implements OnInit {
             this.formGroup.enable();
         } else {
             this.toastService.showError('Vous devez séléctionner un enregistrement', 'Erreur');
-
         }
     }
 
@@ -132,7 +127,7 @@ export class ReglementComponent implements OnInit {
                 showCancelButton: true,
             }).then((result) => {
                 if (result.value) {
-                    this.service.Delete(this.data.Id);
+                    this.service.Delete(this.regDetail.Id);
                     Swal.fire(
                         'Préparation règlement supprimé avec succés',
                         'success'
@@ -146,36 +141,33 @@ export class ReglementComponent implements OnInit {
             })
         } else {
             this.toastService.showError('Vous devez séléctionner un enregistrement', 'Erreur');
-
         }
 
     }
     getObject(row: ReglementDetail) {
         console.log(row);
         this.SelectedRow = row;
-        this.data.Id = row.Id;
-        this.data.Echeance = row.Echeance;
-        this.data.IdBanque = row.IdBanque;
-        this.data.IdModeReglement = row.IdModeReglement;
-        this.data.IdCaisse = row.IdCaisse;
-        this.data.Montant = row.Montant;
+        this.regDetail.Id = row.Id;
+        this.regDetail.Echeance = row.Echeance;
+        this.regDetail.IdBanque = row.IdBanque;
+        this.regDetail.IdModeReglement = row.IdModeReglement;
+        this.regDetail.IdCaisse = row.IdCaisse;
+        this.regDetail.Montant = row.Montant;
         this.formGroup.disable();
     }
 
     Validate() {
         const cumul: Number = this.datasource.data.map(x => x.Montant).reduce((a, b) => a + b, 0);
 
-        if (cumul > this.params.MontantTotal || cumul < this.params.MontantTotal) {
+        if (cumul > this.data.MontantTotal || cumul < this.data.MontantTotal) {
             this.toastService.showError('La somme des montant doit être égale à la somme des montant à payer ', 'Erreur');
         }
-        this.params.factures.forEach(element => {
+        this.data.factures.forEach(element => {
             element.MontantRegle = element.MontantAPayes;
             element.MontantAPayes = 0;
             element.MontantReste = element.MontantTotale - element.MontantRegle;
             this.service.updateFacture(element);
         });
-
-
     }
 
 }

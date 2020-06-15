@@ -34,6 +34,8 @@ export class FactureComponent implements OnInit {
     public dataSource = new MatTableDataSource<Facture>();
     selection = new SelectionModel<Facture>(true, []);
     IdFournisseur: any;
+    currentReg: Reglement;
+    idReglement: number;
 
     constructor(private route: ActivatedRoute, private service: FactureService, public dialog: MatDialog,
         private toast: NotificationService, private authentificate: AuthenticationService) {
@@ -89,7 +91,6 @@ export class FactureComponent implements OnInit {
 
 
     Validate() {
-        debugger;
         // tslint:disable-next-line:label-position
         if (this.selection.selected.length) {
 
@@ -97,9 +98,6 @@ export class FactureComponent implements OnInit {
 
             this.selection.selected.forEach(x => { montant.push(Number(x.MontantAPayes)); });
             const montantTotal: number = montant.reduce((a, b) => a + b, 0);
-
-            console.log(montantTotal);
-
             if (montantTotal > 0) {
                 //Inserttion de reglement dans la base de donnée et recupérer son Id 
                 let currentUser: string;
@@ -108,36 +106,41 @@ export class FactureComponent implements OnInit {
                 reg.DateReglement = new Date();
                 reg.DateValidation = new Date();
                 reg.ValiderPar = currentUser;
-                this.service.AddReglement(reg);
-                const idReglement = 1;
-                //Ajout dans Table Facture l'id de resglement associés avec les id des factures selectioonées 
+                debugger;
+                this.service.AddReglement(reg).subscribe(x => {
+                    this.currentReg = x;
+                    this.idReglement = this.currentReg.Id;
+                    //Ajout dans Table Facture l'id de resglement associés avec les id des factures selectioonées 
 
-                const regFactures: ReglementFacture[] = [];
-                this.selection.selected.forEach(x => {
-                    const fact: ReglementFacture = new ReglementFacture();
-                    fact.IdFacture = x.Id;
-                    fact.IdReglement = idReglement;
-                    fact.MontantTotal = x.MontantAPayes;
-                    this.service.AddReglementFacture(fact);
-                    // regFactures.push(fact);
-                });
+                    const regFactures: ReglementFacture[] = [];
+                    this.selection.selected.forEach(x => {
+                        const fact: ReglementFacture = new ReglementFacture();
+                        fact.IdFacture = x.Id;
+                        fact.IdReglement = this.idReglement;
+                        fact.MontantTotal = x.MontantAPayes;
+                        this.service.AddReglementFacture(fact).subscribe(x => {
+                            return x;
+                        });
+                        // regFactures.push(fact);
+                    });
 
-                const regparams: ReglementPrams = new ReglementPrams();
-                regparams.MontantTotal = montantTotal;
-                regparams.IdFournisseur = this.IdFournisseur;
-                regparams.IdReglement = idReglement;
-                regparams.NombreFacture = this.selection.selected.length;
-                regparams.factures = this.selection.selected;
+                    const params: ReglementPrams = new ReglementPrams();
+                    params.MontantTotal = montantTotal;
+                    params.IdFournisseur = this.IdFournisseur;
+                    params.IdReglement = this.idReglement;
+                    params.NombreFacture = this.selection.selected.length;
+                    params.factures = this.selection.selected;
 
 
-                const dialog = this.dialog.open(ReglementComponent, {
-                    id: 'dialog1',
-                    height: '600px',
-                    width: '700px',
-                    data: { reglement: ReglementPrams }
-                });
-                dialog.afterClosed().subscribe(result => {
-                    console.log(`Dialog result: ${result}`); // Pizza!
+                    const dialog = this.dialog.open(ReglementComponent, {
+                        id: 'dialog1',
+                        height: '600px',
+                        width: '700px',
+                        data: params
+                    });
+                    dialog.afterClosed().subscribe(result => {
+                        console.log(`Dialog result: ${result}`); // Pizza!
+                    });
                 });
             } else {
                 this.toast.showError('Il faut remplir le montant à payer avant de valider ce règlement', 'Erreur');

@@ -28,7 +28,7 @@
       <input matInput 
         [matDatepicker]="fromDate" 
         placeholder="Echeance" 
-        formControlName="Echeance" [(ngModel)]="data.Echeance">
+        formControlName="Echeance" [(ngModel)]="regDetail.Echeance">
       <mat-datepicker-toggle matSuffix [for]="Echeance"></mat-datepicker-toggle>
       <mat-datepicker #fromDate></mat-datepicker>
     </mat-form-field>
@@ -36,7 +36,7 @@
 <div class="form"> 
 <mat-form-field>
  <mat-label>Mode de reglement</mat-label>
-  <mat-select [(ngModel)]="data.IdModeReglement" formControlName="ModeReglement"  [formControl]="modeReglementControl" required>
+  <mat-select [(ngModel)]="regDetail.IdModeReglement" formControlName="ModeReglement"  [formControl]="modeReglementControl" required>
     <mat-option>--</mat-option>
     <mat-option *ngFor="let mode of modeReglement" [value]="mode.Id">
       {{mode.Designation}}
@@ -48,9 +48,9 @@
 <div class="form">
 <mat-form-field>
   <mat-label>Caisse</mat-label>
-  <mat-select [(ngModel)]="data.IdCaisse" formControlName="Caisse">
+  <mat-select [(ngModel)]="regDetail.IdCaisse" formControlName="Caisse">
     <mat-option>--</mat-option>
-    <mat-option *ngFor="let caisse of caisses" [value]="caisse">
+    <mat-option *ngFor="let caisse of caisses" [value]="caisse.Id">
       {{caisse.Designation}}
     </mat-option>
   </mat-select>
@@ -61,9 +61,9 @@
 <div class="form">
 <mat-form-field>
   <mat-label>Banque</mat-label>
-  <mat-select [(ngModel)]="data.IdBanque" formControlName="Banque">
+  <mat-select [(ngModel)]="regDetail.IdBanque" formControlName="Banque">
     <mat-option>--</mat-option>
-    <mat-option *ngFor="let banque of banques" [value]="banque">
+    <mat-option *ngFor="let banque of banques" [value]="banque.Id">
       {{banque.Designation}}
     </mat-option>
   </mat-select>
@@ -71,7 +71,7 @@
 </div>
  <div class="form">
       <mat-form-field color="accent">
-        <input matInput placeholder="Montant" formControlName="Montant" [(ngModel)]="data.Montant" name="Montant">
+        <input matInput placeholder="Montant" formControlName="Montant" [(ngModel)]="regDetail.Montant" name="Montant">
       </mat-form-field>
     </div>
     </div>

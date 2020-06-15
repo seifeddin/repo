@@ -10,17 +10,17 @@ import { ReglementFacture } from 'app/models/ReglementFacture';
 @Injectable({
     providedIn: 'root'
 })
-export class FactureService {
 
+export class FactureService {
 
     constructor(private http: HttpClient) { }
     getFacturesByFournisseurs(id: number): Observable<Facture[]> {
         return this.http.get<Facture[]>(`${environment.apiUrl}/api/Facture/factures/` + id);
     }
-    AddReglement(reg: Reglement) {
-        return this.http.post(`${environment.apiUrl}/api/Reglement/Add/`, reg);
+    AddReglement(reg: Reglement): Observable<Reglement> {
+        return this.http.post<Reglement>(`${environment.apiUrl}/api/Reglement`, reg);
     }
-    AddReglementFacture(reg: ReglementFacture) {
-        this.http.post(`${environment.apiUrl}/api/ReglementFacture/Add/`, reg);
+    AddReglementFacture(reg: ReglementFacture): Observable<any> {
+        return this.http.post(`${environment.apiUrl}/api/ReglementFacture`, reg);
     }
 }
