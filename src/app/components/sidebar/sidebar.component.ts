@@ -15,8 +15,19 @@ declare interface RouteInfo {
     active?: boolean;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', active: false, type: 'dropdown' },
-    { path: '/supplier', title: 'Preparation Reglements', icon: 'bubble_chart', class: '', active: false, type: 'dropdown', submenus: [{ path: '/user-profile', title: 'User Profile1', icon: 'person', class: '', }, { path: '/user-profile', title: 'User Profile2', icon: 'person', class: '', }] },
+    { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', active: false, type: 'header' },
+    {
+        path: '/supplier', title: 'Preparation Reglements', icon: 'bubble_chart', class: '', active: false, type: 'dropdown', submenus: [
+            { path: '/user-profile', title: 'User Profile1', icon: 'person', class: '', type: 'simple' },
+            { path: '/user-profile', title: 'User Profile2', icon: 'person', class: '', type: 'simple' }
+        ]
+    },
+    {
+        path: '/supplier', title: 'Preparation Reglements', icon: 'bubble_chart', class: '', active: false, type: 'dropdown', submenus: [
+            { path: '/user-profile', title: 'User Profile1', icon: 'person', class: '', type: 'simple' },
+            { path: '/user-profile', title: 'User Profile2', icon: 'person', class: '', type: 'simple' }
+        ]
+    },
     //     { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
     //     { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
     //     { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },

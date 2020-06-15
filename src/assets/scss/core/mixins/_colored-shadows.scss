@@ -1,7 +1,5 @@
 @mixin shadow-big(){
-    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, $bmd-shadow-penumbra-opacity * 4),
-    0  4px 25px 0px rgba(0, 0, 0, $bmd-shadow-ambient-opacity),
-    0  8px 10px -5px rgba(0, 0, 0, $bmd-shadow-umbra-opacity);
+    box-shadow: 0 16px 16px -12px rgba(0, 0, 0, 0.4), 0 4px 25px 0px rgba(0, 0, 0, 0.15), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 @mixin shadow-big-image(){
