@@ -63,6 +63,9 @@ export class FactureComponent implements OnInit {
 
         })
     }
+    valideEnter() {
+        this.editRowId = null;
+    }
 
 
 

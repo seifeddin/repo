@@ -4,3 +4,7 @@ table{
    tr.mat-footer-row {
        font-weight: bold;
      }
+
+     .mat-icon {
+      font-size: 15px;
+    }
