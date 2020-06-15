@@ -9,7 +9,7 @@ export class SidebarService {
   menus = [
     {
       title: 'Dashboard',
-      icon: 'fa fa-tachometer-alt',
+      icon: 'fa fa-tachometer',
       active: false,
       type: 'simple'
     },
@@ -21,23 +21,23 @@ export class SidebarService {
       submenus: [
         {
           title: 'Preparation',
-          path: '/supplier'
+          path: '/supplier',
         },
         {
-            title: 'Generation',
-            path: '/reglement'
-          },
-          {
-              title: 'Facture',
-              path: '/facture'
-          },
+          title: 'Generation',
+          path: '/reglement',
+        },
+        {
+          title: 'Facture',
+          path: '/facture',
+        },
       ]
     }
   ];
   constructor() { }
 
   toggle() {
-    this.toggled = ! this.toggled;
+    this.toggled = !this.toggled;
   }
 
   getSidebarState() {

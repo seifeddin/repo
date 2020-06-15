@@ -52,7 +52,6 @@
     width: 260px;
     height: 100%;
     max-height: 100%;
-    // background-image: url(../../../assets//img/sidebar-1.jpg);
     position: fixed;
     top: 0;
     left: 0px;
@@ -63,7 +62,12 @@
       text-decoration: none;
       transition: color .3s ease;
     }
-  
+    .sidebar-background-img ::after{
+
+      background-image: url(../../../assets//img/sidebar-1.jpg);
+      opacity: 0.8;
+      z-index: 999;
+    }
     .sidebar-content {
       max-height: calc(100% - 30px);
       height: calc(100% - 30px);
@@ -95,10 +99,10 @@
   
         .user-pic {
           float: left;
-          width: 60px;
+          width: 68px;
           padding: 2px;
           border-radius: 12px;
-          margin-right: 15px;
+          margin-right: 11px;
           overflow: hidden;
   
           img {
@@ -121,7 +125,7 @@
   
           .user-status {
             font-size: 11px;
-            margin-top: 4px;
+            margin-top: 1px;
   
             i {
               font-size: 8px;
@@ -190,12 +194,12 @@
             }
           }
         }
-  
+        @import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
         .sidebar-dropdown {
           >a:after {
-            font-family: "Font Awesome 5 Free";
+            font-family: 'Font Awesome 5 Free';
             font-weight: 900;
-            content: "\f105";
+            content: '\f105';
             display: inline-block;
             font-style: normal;
             font-variant: normal;
@@ -414,13 +418,14 @@
   
   
   /*------------------------------default theme---------------------------------*/
-  $bg-sidebar-wrapper : #1d1d1d;
-  $border-color : #2b2b2b;
+  $bg-sidebar-wrapper : #fbfbfb;
+  $border-color : #e5e5e5;
+  $font-color : #3c4858;
   $footer-top-border-color :#3a3a3a;
-  $color:#bdbdbd;
+  $color:#5e6875;
   $header-menu-color :#6c7b88;
-  $hover-color:#ffffff;
-  $shadow-color:#131212;
+  $hover-color:#0f0202;
+  $shadow-color:#999898;
   $bg-scrollbar :#636363;
   
   // colors with backgound image
@@ -443,7 +448,7 @@
   
     .sidebar-search input.search-menu,
     .sidebar-search .input-group-text {
-      border-color: $border-color;
+      border-color: $font-color;
       box-shadow: none;
     }
   
@@ -540,9 +545,9 @@
       }
   
       .sidebar-footer {
-        background-color: $img-bg-footer;
-        box-shadow: 0px -1px 5px $img-bg-footer;
-        border-top: 1px solid $img-border-color;
+        background-color: #e5e5e599;
+        box-shadow: 0px -1px 12px #9998987a;
+        border-top: 1px solid #3a3a3a38;
       }
   
     }
