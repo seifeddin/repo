@@ -101,12 +101,12 @@ export class FactureComponent implements OnInit {
             if (montantTotal > 0) {
                 //Inserttion de reglement dans la base de donnée et recupérer son Id 
                 let currentUser: string;
-                this.authentificate.currentUser.subscribe(x => currentUser = x.firstName + ' ' + x.lastName);
+                this.authentificate.currentUser.subscribe(x => { currentUser = x.firstName + ' ' + x.lastName });
                 const reg: Reglement = new Reglement();
                 reg.DateReglement = new Date();
                 reg.DateValidation = new Date();
                 reg.ValiderPar = currentUser;
-                debugger;
+
                 this.service.AddReglement(reg).subscribe(x => {
                     this.currentReg = x;
                     this.idReglement = this.currentReg.Id;
@@ -135,7 +135,7 @@ export class FactureComponent implements OnInit {
                     const dialog = this.dialog.open(ReglementComponent, {
                         id: 'dialog1',
                         height: '600px',
-                        width: '700px',
+                        width: '1100px',
                         data: params
                     });
                     dialog.afterClosed().subscribe(result => {

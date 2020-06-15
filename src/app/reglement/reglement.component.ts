@@ -68,11 +68,12 @@ export class ReglementComponent implements OnInit {
         this.service.Get(this.data.IdReglement).subscribe(x => this.datasource.data = x);
 
     }
-    
+
     addNew() {
         this.formGroup.enable();
         this.edit = 'Create';
         this.regDetail = new ReglementDetail();
+        this.regDetail.Echeance = new Date();
         this.regDetail.IdReglement = this.data.IdReglement;
     }
 

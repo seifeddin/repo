@@ -14,7 +14,7 @@ export class ReglementService {
 
     constructor(private http: HttpClient) { }
 
- 
+
 
     getLookupBanque(): Observable<any> {
         return this.http.get(`${environment.apiUrl}/api/Banque/GetLookup/`);
