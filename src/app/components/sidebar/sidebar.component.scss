@@ -47,7 +47,18 @@
       opacity: 0;
     }
   }
-  
+  .sidebar-background-img ::after{
+    background-image: url(../../../assets//img/sidebar-1.jpg);
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    display: block;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: 50%;
+  }
   .sidebar {
     width: 260px;
     height: 100%;
@@ -55,18 +66,12 @@
     position: fixed;
     top: 0;
     left: 0px;
-    z-index: 999;
+    z-index: 4;
     transition: left .3s ease;
   
     a {
       text-decoration: none;
       transition: color .3s ease;
-    }
-    .sidebar-background-img ::after{
-
-      background-image: url(../../../assets//img/sidebar-1.jpg);
-      opacity: 0.8;
-      z-index: 999;
     }
     .sidebar-content {
       max-height: calc(100% - 30px);
@@ -438,7 +443,7 @@
   
   .sidebar {
   
-    background-color: $bg-sidebar-wrapper;
+    background-color: #fff0;
   
     .sidebar-profile,
     .sidebar-search,
