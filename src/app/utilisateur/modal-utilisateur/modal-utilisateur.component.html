@@ -1,0 +1,98 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title " mat-dialog-title>{{Operation}} Utilisateur</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+                        <div mat-dialog-actions class="mb-5 align-self-end">
+                            <button mat-icon-button color="accent" (click)="addNew()">
+                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                            </button>
+                            <button mat-icon-button color="accent" (click)="onNoClick()">
+                                <mat-icon aria-label="Cancel">cancel</mat-icon>
+                            </button>
+                            <button mat-icon-button color="accent" (click)="Save()">
+                                <mat-icon aria-label="dynamic_feed">dynamic_feed</mat-icon>
+                            </button>
+                        </div>
+                        <div [formGroup]="formGroup">
+                            <div class="row">
+                                <div class="col-3">
+                                    <mat-form-field color="accent">
+                                        <input matInput placeholder="Nom Utilisateur" formControlName="NomUtilisateur"
+                                            [(ngModel)]="Utilisateur.NomUtilisateur" name="NomUtilisateur">
+                                    </mat-form-field>
+                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
+                                    </mat-error>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field color="accent">
+                                        <input matInput placeholder="Nom" formControlName="Nom"
+                                            [(ngModel)]="Utilisateur.Nom" name="Nom">
+                                    </mat-form-field>
+                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
+                                    </mat-error>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field color="accent">
+                                        <input matInput placeholder="Prenom" formControlName="Prenom"
+                                            [(ngModel)]="Utilisateur.Prenom" name="Prenom">
+                                    </mat-form-field>
+                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
+                                    </mat-error>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field color="accent">
+                                        <input matInput placeholder="Mot De Passe" formControlName="MotDePasse"
+                                            [(ngModel)]="Utilisateur.MotDePasse" name="MotDePasse">
+                                    </mat-form-field>
+                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
+                                    </mat-error>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field color="accent">
+                                        <input matInput placeholder="Email" formControlName="Email"
+                                            [(ngModel)]="Utilisateur.Email" name="Email">
+                                    </mat-form-field>
+                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
+                                    </mat-error>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field color="accent">
+                                        <input matInput placeholder="Telephone" formControlName="Telephone"
+                                            [(ngModel)]="Utilisateur.Telephone" name="Telephone">
+                                    </mat-form-field>
+                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
+                                    </mat-error>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field>
+                                        <mat-label>Role fonctionnel</mat-label>
+                                        <mat-select [(ngModel)]="Utilisateur.IdRoleFonctionnel"
+                                            formControlName="roleFonctionnel">
+                                            <mat-option>--</mat-option>
+                                            <mat-option *ngFor="let roleFonctionnel of roleFonctionnels"
+                                                [value]="roleFonctionnel.Id">
+                                                {{roleFonctionnel.Designation}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <!--<div class="col-12">
+                                    <mat-form-field color="accent">
+                                        <mat-checkbox placeholder="EstActive" [(ngModel)]="Utilisateur.EstActive"
+                                            formControlName="EstActive" name="EstActive">
+                                        </mat-checkbox>
+                                    </mat-form-field>
+                                </div>-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

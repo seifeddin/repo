@@ -20,6 +20,11 @@ import { SweetAlertService } from 'angular-sweetalert-service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReglementListComponent } from './reglement-list/reglement-list.component';
+import { UtilisateurComponent } from './utilisateur/utilisateur.component';
+import { RolefonctionnelComponent } from './rolefonctionnel/rolefonctionnel.component';
+import { RoletechniqueComponent } from './roletechnique/roletechnique.component';
+import { AdministrationComponent } from './administration/administration.component';
+import { ModalUtilisateurComponent } from './utilisateur/modal-utilisateur/modal-utilisateur.component';
 
 
 
