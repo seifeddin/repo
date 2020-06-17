@@ -12,6 +12,7 @@ import { SupplierComponent } from '../../supplier/supplier.component';
 import { FactureComponent } from '../../facture/facture.component';
 import { ReglementComponent } from '../../reglement/reglement.component';
 import { ReglementListComponent } from 'app/reglement-list/reglement-list.component';
+import { AdministrationComponent } from 'app/administration/administration.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -67,5 +68,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade', component: UpgradeComponent },
     { path: 'facture', component: FactureComponent },
     { path: 'reglement', component: ReglementComponent },
-    { path: 'reglement-list', component: ReglementListComponent }
+    { path: 'reglement-list', component: ReglementListComponent },
+    { path: 'administration', component: AdministrationComponent }
 ];

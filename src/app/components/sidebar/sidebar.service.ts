@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class SidebarService {
     toggled = false;
     _hasBackgroundImage = true;
+    administration = { title: 'admin', path: '/administration' };
     menus = [
         {
             title: 'Dashboard',

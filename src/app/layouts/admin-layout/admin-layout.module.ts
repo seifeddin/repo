@@ -16,32 +16,41 @@ import { MaterialModule } from '../../material/material/material.module';
 import { SupplierComponent } from '../../supplier/supplier.component';
 import { FactureComponent } from '../../facture/facture.component';
 import { ReglementComponent } from '../../reglement/reglement.component';
-import { ReglementListComponent } from 'app/reglement-list/reglement-list.component';
+import { AdministrationComponent } from 'app/administration/administration.component';
+import { UtilisateurComponent } from 'app/utilisateur/utilisateur.component';
+import { RolefonctionnelComponent } from 'app/rolefonctionnel/rolefonctionnel.component';
+import { RoletechniqueComponent } from 'app/roletechnique/roletechnique.component';
+import { ModalUtilisateurComponent } from 'app/utilisateur/modal-utilisateur/modal-utilisateur.component';
 
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild(AdminLayoutRoutes),
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule
-    ],
-    declarations: [
-        DashboardComponent,
-        UserProfileComponent,
-        TableListComponent,
-        TypographyComponent,
-        IconsComponent,
-        MapsComponent,
-        NotificationsComponent,
-        UpgradeComponent,
-        SupplierComponent,
-        FactureComponent,
-        ReglementComponent,
-        ReglementListComponent
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(AdminLayoutRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule
+  ],
+  declarations: [
+    DashboardComponent,
+    UserProfileComponent,
+    TableListComponent,
+    TypographyComponent,
+    IconsComponent,
+    MapsComponent,
+    NotificationsComponent,
+    UpgradeComponent,
+    SupplierComponent,
+    FactureComponent,
+    ReglementComponent,
+    AdministrationComponent,
+    UtilisateurComponent,
+    RolefonctionnelComponent,
+    RoletechniqueComponent,
+    ModalUtilisateurComponent,
+
+  ]
 })
 
 export class AdminLayoutModule { }
