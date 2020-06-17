@@ -4,6 +4,7 @@ import { Utilisateur } from 'app/models/Utilisateur';
 import { environment } from 'environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Lookup } from 'app/models/Lookup';
+import { RoleFonctionnel } from 'app/models/RoleFonctionnel';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,10 @@ export class AdminstrationService {
   EditUser(data: Utilisateur): Observable<Utilisateur> {
 
     return this.http.put<Utilisateur>(`${environment.apiUrl}/api/Utilisateur`, data);
+  }
+
+  getRoleFonctionnels(): Observable<RoleFonctionnel[]> {
+
+    return this.http.get<RoleFonctionnel[]>(`${environment.apiUrl}/api/RoleFonctionnel`);
   }
 }
