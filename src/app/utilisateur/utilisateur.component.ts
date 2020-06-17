@@ -23,10 +23,10 @@ export class UtilisateurComponent implements OnInit {
   constructor(private service: AdminstrationService, private dialog: MatDialog, ) { }
 
   ngOnInit(): void {
-    this.getFacture();
+    this.getUsers();
   }
 
-  getFacture() {
+  getUsers() {
     this.service.getUtilisateurs().subscribe(res => {
       this.dataSource.data = res.map(x => new Utilisateur(x)) as Utilisateur[];
       console.log(this.dataSource.data);
@@ -39,6 +39,9 @@ export class UtilisateurComponent implements OnInit {
       width: '1100px',
       data: { id: null }
     });
+    dialog.afterClosed().subscribe(x => {
+      this.getUsers();
+    });
   }
   public Edit(Id) {
     const dialog = this.dialog.open(ModalUtilisateurComponent, {
@@ -46,6 +49,9 @@ export class UtilisateurComponent implements OnInit {
       height: '600px',
       width: '1100px',
       data: { id: Id }
+    });
+    dialog.afterClosed().subscribe(x => {
+      this.getUsers();
     });
   }
   public Delete(Id) {
@@ -60,7 +66,7 @@ export class UtilisateurComponent implements OnInit {
             'Utilisateur supprimé avec succés',
             'success'
           );
-          this.getFacture();
+          this.getUsers();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

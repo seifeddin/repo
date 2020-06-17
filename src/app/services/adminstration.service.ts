@@ -29,10 +29,10 @@ export class AdminstrationService {
   }
   AddUser(data: Utilisateur): Observable<Utilisateur> {
     console.log(data);
-    return this.http.post<Utilisateur>(`${environment.apiUrl}/api/DetailReglement`, data);
+    return this.http.post<Utilisateur>(`${environment.apiUrl}/api/Utilisateur`, data);
   }
   EditUser(data: Utilisateur): Observable<Utilisateur> {
 
-    return this.http.put<Utilisateur>(`${environment.apiUrl}/api/DetailReglement`, data);
+    return this.http.put<Utilisateur>(`${environment.apiUrl}/api/Utilisateur`, data);
   }
 }

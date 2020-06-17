@@ -17,7 +17,7 @@ export class ModalUtilisateurComponent implements OnInit {
   formGroup: FormGroup;
   Operation: string;
   Utilisateur: Utilisateur;
-  roleFonctionnel: Lookup[];
+  roleFonctionnels: Lookup[];
   utilisateurControl = new FormControl('', Validators.required);
 
   constructor(public dialogRef: MatDialogRef<ModalUtilisateurComponent>,
@@ -35,7 +35,7 @@ export class ModalUtilisateurComponent implements OnInit {
       MotDePasse: new FormControl(),
       Email: new FormControl(),
       Telephone: new FormControl(),
-      roleFonctionnel: new FormControl(),
+      IdRoleFonctionnel: new FormControl(),
       EstActive: new FormControl()
 
     });
@@ -45,7 +45,7 @@ export class ModalUtilisateurComponent implements OnInit {
     this.Utilisateur = new Utilisateur(undefined);
     this.Operation = this.data?.id !== null && this.data?.id !== undefined ? 'Modifier' : 'Ajouter';
     console.log(this.data?.id);
-    this.service.getRoleFonctionnelLookUp().subscribe(x => { this.roleFonctionnel = x });
+    this.service.getRoleFonctionnelLookUp().subscribe(x => { this.roleFonctionnels = x });
     if (this.Operation == 'Modifier') {
       this.service.getUtilisateurById(this.data.id).subscribe(x => { this.Utilisateur = new Utilisateur(x) });
     }
@@ -74,13 +74,20 @@ export class ModalUtilisateurComponent implements OnInit {
           this.service.EditUser(this.Utilisateur).subscribe(x => {
 
             Swal.fire(
-              'Enregistrement règlement effectué avec succés',
+              'Modification Utilisateur effectué avec succés',
               'success'
-            )
+            );
           });
         }
         if (this.Operation === 'Ajouter') {
-          this.service.AddUser(this.Utilisateur);
+          this.service.AddUser(this.Utilisateur).subscribe(
+            x => {
+
+              Swal.fire(
+                'Enregistrement Utilisateur effectué avec succés',
+                'success'
+              )
+            });
         }
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
