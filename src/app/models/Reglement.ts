@@ -7,4 +7,7 @@ export class Reglement {
     IdRetenu?: number;
     IdSuiviBancaire?: number;
     IdBonAPayer?: number;
+    NumFrs: number;
+    NumPreparation: string;
+    Montant: number;
 }

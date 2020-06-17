@@ -12,6 +12,7 @@ import Swal from 'sweetalert2'
 import { ReglementPrams } from 'app/models/ReglementParams';
 import { NotificationService } from 'app/services/notification.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { HttpResponse } from '@angular/common/http';
 
 
 
@@ -65,8 +66,12 @@ export class ReglementComponent implements OnInit {
         this.regDetail.Echeance = new Date();
         this.regDetail.IdReglement = this.data.IdReglement;
         this.regDetail.Montant = 0;
-        this.service.Get(this.data.IdReglement).subscribe(x => this.datasource.data = x);
+        this.GetData();
 
+    }
+
+    GetData() {
+        this.service.Get(this.data.IdReglement).subscribe(x => this.datasource.data = x);
     }
 
     addNew() {
@@ -96,6 +101,8 @@ export class ReglementComponent implements OnInit {
                             'Enregistrement règlement effectué avec succés',
                             'success'
                         )
+                        this.GetData();
+
                     });
                 }
                 if (this.edit === 'Edit') {
@@ -171,6 +178,7 @@ export class ReglementComponent implements OnInit {
         });
     }
 
+  
 }
 
 

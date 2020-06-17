@@ -11,6 +11,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Lookup } from '../models/Lookup';
+import { HttpResponse } from '@angular/common/http';
 
 
 
@@ -103,5 +104,23 @@ export class SupplierComponent implements OnInit {
             this.dataSource = new MatTableDataSource(this.fournisseurs.filter(e => e.Nom.toLowerCase().includes(filterValue)));
             return this.lstSuppliers.filter(option => option.Designation.toLowerCase().includes(filterValue));
         }
+    }
+
+    ReadPF() {
+        debugger;
+        this.supplierService.getPdfDocument()
+            .subscribe(
+                (data) => {
+                    this.openFileForPrint(data);
+                });
+    }
+
+    openFileForPrint(data1: HttpResponse<any>) {
+        debugger;
+        console.log(data1.body);
+        const binaryData = [];
+        binaryData.push(data1);
+        const fileUrl = window.URL.createObjectURL(new Blob(binaryData, { type: 'application/pdf' }));
+        window.open(fileUrl, '_blank', 'location=yes,height=600,width=800,scrollbars=yes,status=yes');
     }
 }

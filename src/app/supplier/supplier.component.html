@@ -8,6 +8,12 @@
                       <p class="card-category"> DT</p>
                   </div>
                   <div class="card-body">
+                   <button mat-icon-button color="accent" (click)="ReadPF()">
+                <mat-icon aria-label="Delete">delete</mat-icon>
+              </button>
+
+
+
                   <form class="date-block" [formGroup]="filterForm">
     <div class="date-block__list mt-3 removesapce">
      <mat-label>Date écheance :</mat-label>
@@ -40,7 +46,7 @@
 <div class="row">
 <mat-form-field class="example-full-width">
     <input type="text"
-           placeholder="Filter par Nom"
+           placeholder="Filter par Fournisseur"
            aria-label="Number"
            matInput
            [formControl]="myControl"

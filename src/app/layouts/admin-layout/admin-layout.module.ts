@@ -16,30 +16,32 @@ import { MaterialModule } from '../../material/material/material.module';
 import { SupplierComponent } from '../../supplier/supplier.component';
 import { FactureComponent } from '../../facture/facture.component';
 import { ReglementComponent } from '../../reglement/reglement.component';
+import { ReglementListComponent } from 'app/reglement-list/reglement-list.component';
 
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule
-  ],
-  declarations: [
-    DashboardComponent,
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
-    SupplierComponent,
-    FactureComponent,
-    ReglementComponent,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule
+    ],
+    declarations: [
+        DashboardComponent,
+        UserProfileComponent,
+        TableListComponent,
+        TypographyComponent,
+        IconsComponent,
+        MapsComponent,
+        NotificationsComponent,
+        UpgradeComponent,
+        SupplierComponent,
+        FactureComponent,
+        ReglementComponent,
+        ReglementListComponent
+    ]
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule { }

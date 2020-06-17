@@ -19,7 +19,6 @@ import { BasicAuthInterceptor, ErrorInterceptor } from './helpers';
 import { SweetAlertService } from 'angular-sweetalert-service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReglementListComponent } from './reglement-list/reglement-list.component';
 
 
 
@@ -46,7 +45,6 @@ import { ReglementListComponent } from './reglement-list/reglement-list.componen
         AppComponent,
         AdminLayoutComponent,
         LoginComponent,
-        ReglementListComponent,
 
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
