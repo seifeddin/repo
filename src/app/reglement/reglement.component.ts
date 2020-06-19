@@ -106,7 +106,11 @@ export class ReglementComponent implements OnInit {
                     });
                 }
                 if (this.edit === 'Edit') {
-                    this.service.Edit(this.regDetail);
+                    this.service.Edit(this.regDetail).subscribe(x => {
+                        Swal.fire('Enregistrement règlement effectué avec succés',
+                            'success')
+                        this.GetData();
+                    });
                 }
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire(
@@ -178,7 +182,6 @@ export class ReglementComponent implements OnInit {
         });
     }
 
-  
 }
 
 

@@ -7,6 +7,8 @@ import { FormControl } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { ReglementListService } from 'app/services/reglement-list.service';
+import { map } from 'rxjs/operators';
+import { BonAPayer } from 'app/models/BonAPayer';
 
 @Component({
     selector: 'app-reglement-list',
@@ -14,7 +16,8 @@ import { ReglementListService } from 'app/services/reglement-list.service';
     styleUrls: ['./reglement-list.component.css']
 })
 export class ReglementListComponent implements OnInit {
-    public displayedColumns = ['Id', 'IdBonAPayer', 'NumFrs', 'NumPreparation', 'IdRetenu', 'Date', 'Montant'];
+    // public displayedColumns = ['Id', 'IdBonAPayer', 'NumFrs', 'NumPreparation', 'IdRetenu', 'Date', 'Montant'];
+    public displayedColumns = ['Id', 'IdBonAPayer', 'NumFrs', 'NumPreparation', 'IdRetenu', 'DateValidation'];
     public dataSource = new MatTableDataSource<Reglement>();
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -28,12 +31,13 @@ export class ReglementListComponent implements OnInit {
 
     ngOnInit(): void {
         this.service.getLookupFournisseur().subscribe((res) => {
+            debugger;
             this.lstSuppliers = res.map((item: { Id: number; Designation: string; }) => new Lookup(item.Id, item.Designation));
         });
         this.GetAllReglement();
         this.filteredOptions = this.myControl.valueChanges
             .pipe(
-                Map(value => this._filter(value))
+                map(value => this._filter(value))
             );
 
     }
@@ -43,22 +47,36 @@ export class ReglementListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
     }
     GetAllReglement() {
-        // this.supplierService.getAll()
-        // .subscribe(res => {
-        //     console.log(res);
-        //     this.lstReglement = res;
-        //     this.dataSource.data = res as Supplier[];
-        // });
+
+        this.dataSource.data = [];
+        // this.service.GetAllByFrs()
+        //     .subscribe(res => {
+        //         console.log(res);
+        //         this.lstReglement = res;
+        //         this.dataSource.data = res as Reglement[];
+        //     });
     }
 
     // autocomplete filter treatment
     private _filter(value: string): Lookup[] {
-        const filterValue = value.toLowerCase();
+
+        //  const filterValue = value.toLowerCase();
         if (this.lstSuppliers !== undefined) {
+
             // tslint:disable-next-line:radix
-            this.dataSource = new MatTableDataSource(this.lstReglement.filter(e => e.NumFrs === Number.parseInt(filterValue)));
-            return this.lstSuppliers.filter(option => option.Designation.toLowerCase().includes(filterValue));
+
+            // tslint:disable-next-line:radix
+            this.service.GetAllByFrs(Number.parseInt(value)).subscribe(x => this.dataSource = new MatTableDataSource(x));
+            ;
+            // tslint:disable-next-line:radix
+            return this.lstSuppliers.filter(option => option.Id === Number.parseInt(value));
         }
     }
+
+    Generate() {
+        //  this.service.AddBonAPayer();
+        //this.service.UpdateReglement()
+    }
+    AddRetenu() { }
 
 }

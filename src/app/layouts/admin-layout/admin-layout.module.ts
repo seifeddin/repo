@@ -21,36 +21,38 @@ import { UtilisateurComponent } from 'app/utilisateur/utilisateur.component';
 import { RolefonctionnelComponent } from 'app/rolefonctionnel/rolefonctionnel.component';
 import { RoletechniqueComponent } from 'app/roletechnique/roletechnique.component';
 import { ModalUtilisateurComponent } from 'app/utilisateur/modal-utilisateur/modal-utilisateur.component';
+import { ReglementListComponent } from 'app/reglement-list/reglement-list.component';
 
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule
-  ],
-  declarations: [
-    DashboardComponent,
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
-    SupplierComponent,
-    FactureComponent,
-    ReglementComponent,
-    AdministrationComponent,
-    UtilisateurComponent,
-    RolefonctionnelComponent,
-    RoletechniqueComponent,
-    ModalUtilisateurComponent,
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule
+    ],
+    declarations: [
+        DashboardComponent,
+        UserProfileComponent,
+        TableListComponent,
+        TypographyComponent,
+        IconsComponent,
+        MapsComponent,
+        NotificationsComponent,
+        UpgradeComponent,
+        SupplierComponent,
+        FactureComponent,
+        ReglementComponent,
+        AdministrationComponent,
+        UtilisateurComponent,
+        RolefonctionnelComponent,
+        RoletechniqueComponent,
+        ModalUtilisateurComponent,
+        ReglementListComponent
 
-  ]
+    ]
 })
 
 export class AdminLayoutModule { }

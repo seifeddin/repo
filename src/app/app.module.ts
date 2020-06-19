@@ -19,6 +19,7 @@ import { BasicAuthInterceptor, ErrorInterceptor } from './helpers';
 import { SweetAlertService } from 'angular-sweetalert-service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserModule } from '@angular/platform-browser';
+import { ModalRetenuComponent } from './reglement-list/modal-retenu/modal-retenu.component';
 
 
 
@@ -45,6 +46,7 @@ import { BrowserModule } from '@angular/platform-browser';
         AppComponent,
         AdminLayoutComponent,
         LoginComponent,
+        ModalRetenuComponent,
 
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

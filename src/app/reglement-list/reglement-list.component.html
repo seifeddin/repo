@@ -4,7 +4,10 @@
       <div class="card-header card-header-danger">
         <h4 class="card-title " mat-dialog-title>Liste des Règlements par Fournisseur</h4>
       </div>
-      <div class="card-body">
+      <div class="card-body"><div class="button-row float-right">
+              <button mat-stroked-button class="btn btn-primary mr-2" (click)="Generate()">Génération</button>
+              <button mat-stroked-button class="btn btn-danger" (click)="AddRetenu()">Retenu</button>
+            </div>
         <div class="row">
         <mat-form-field class="example-full-width">
      <input type="text"
@@ -14,8 +17,8 @@
            [formControl]="myControl"
            [matAutocomplete]="auto">     
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.Designation">
-        {{option.Designation}}
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option.Id">
+        {{option.Id}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

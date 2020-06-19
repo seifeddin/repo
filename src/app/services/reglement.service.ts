@@ -38,15 +38,16 @@ export class ReglementService {
         console.log(data);
         return this.http.post<ReglementDetail>(`${environment.apiUrl}/api/DetailReglement`, data);
     }
-    Edit(data: ReglementDetail) {
-        this.http.put(`${environment.apiUrl}/api/DetailReglement`, data);
+    Edit(data: ReglementDetail): Observable<ReglementDetail> {
+        return this.http.put<ReglementDetail>(`${environment.apiUrl}/api/DetailReglement`, data);
     }
-    Delete(id: number) {
-        this.http.delete(`${environment.apiUrl}/api/DetailReglement`, { params: new HttpParams().set('id', id.toString()) });
+    Delete(id: number): Observable<ReglementDetail> {
+        // tslint:disable-next-line:max-line-length
+        return this.http.delete<ReglementDetail>(`${environment.apiUrl}/api/DetailReglement`, { params: new HttpParams().set('id', id.toString()) });
     }
-    updateFacture(element: Facture) {
-        this.http.put(`${environment.apiUrl}/api/facture`, element);
+    updateFacture(element: Facture): Observable<Facture> {
+        return this.http.put<Facture>(`${environment.apiUrl}/api/facture`, element);
     }
-  
+
 
 }
