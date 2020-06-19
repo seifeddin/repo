@@ -22,6 +22,9 @@ import { RolefonctionnelComponent } from 'app/rolefonctionnel/rolefonctionnel.co
 import { RoletechniqueComponent } from 'app/roletechnique/roletechnique.component';
 import { ModalUtilisateurComponent } from 'app/utilisateur/modal-utilisateur/modal-utilisateur.component';
 
+// nouvel Modal Ajouter attention git
+import { ModalRolefonctionnelComponent } from 'app/rolefonctionnel/modal-rolefonctionnel/modal-rolefonctionnel.component';
+
 
 
 @NgModule({
@@ -49,6 +52,7 @@ import { ModalUtilisateurComponent } from 'app/utilisateur/modal-utilisateur/mod
     RolefonctionnelComponent,
     RoletechniqueComponent,
     ModalUtilisateurComponent,
+    ModalRolefonctionnelComponent, // nouvel Modal Ajouter attention git
 
   ]
 })
