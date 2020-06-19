@@ -41,4 +41,17 @@ export class AdminstrationService {
 
     return this.http.get<RoleFonctionnel[]>(`${environment.apiUrl}/api/RoleFonctionnel`);
   }
+
+  getRoleFonctionnelById(id): Observable<RoleFonctionnel> {
+
+    return this.http.get<RoleFonctionnel>(`${environment.apiUrl}/api/RoleFonctionnel/GetById/` + id);
+  }
+
+  EditRoleFonctionnel(data: RoleFonctionnel): Observable<RoleFonctionnel> {
+    return this.http.put<RoleFonctionnel>(`${environment.apiUrl}/api/RoleFonctionnel`, data);
+  }
+
+  AddRoleFonctionnel(data: RoleFonctionnel): Observable<RoleFonctionnel> {
+    return this.http.post<RoleFonctionnel>(`${environment.apiUrl}/api/RoleFonctionnel`, data);
+  }
 }

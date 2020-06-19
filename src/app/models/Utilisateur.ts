@@ -1,3 +1,5 @@
+import { RoleFonctionnel } from "./RoleFonctionnel";
+
 export class Utilisateur {
     Id: number;
     IdRoleFonctionnel: number;
@@ -8,6 +10,7 @@ export class Utilisateur {
     Email: string;
     Telephone: string
     EstActive: boolean;
+    RoleFonctionnel: RoleFonctionnel;
 
     constructor(utilisateur: Utilisateur) {
         if (utilisateur !== undefined) {
@@ -20,6 +23,7 @@ export class Utilisateur {
             this.Prenom = utilisateur.Prenom;
             this.Telephone = utilisateur.Telephone;
             this.NomUtilisateur = utilisateur.NomUtilisateur;
+            this.RoleFonctionnel = utilisateur.RoleFonctionnel ?? new RoleFonctionnel(undefined);
         }
 
     }

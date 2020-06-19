@@ -23,34 +23,37 @@ import { RoletechniqueComponent } from 'app/roletechnique/roletechnique.componen
 import { ModalUtilisateurComponent } from 'app/utilisateur/modal-utilisateur/modal-utilisateur.component';
 import { ReglementListComponent } from 'app/reglement-list/reglement-list.component';
 
+// nouvel Modal Ajouter attention git
+import { ModalRolefonctionnelComponent } from 'app/rolefonctionnel/modal-rolefonctionnel/modal-rolefonctionnel.component';
+
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild(AdminLayoutRoutes),
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule
-    ],
-    declarations: [
-        DashboardComponent,
-        UserProfileComponent,
-        TableListComponent,
-        TypographyComponent,
-        IconsComponent,
-        MapsComponent,
-        NotificationsComponent,
-        UpgradeComponent,
-        SupplierComponent,
-        FactureComponent,
-        ReglementComponent,
-        AdministrationComponent,
-        UtilisateurComponent,
-        RolefonctionnelComponent,
-        RoletechniqueComponent,
-        ModalUtilisateurComponent,
-        ReglementListComponent
+  imports: [
+    CommonModule,
+    RouterModule.forChild(AdminLayoutRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule
+  ],
+  declarations: [
+    DashboardComponent,
+    UserProfileComponent,
+    TableListComponent,
+    TypographyComponent,
+    IconsComponent,
+    MapsComponent,
+    NotificationsComponent,
+    UpgradeComponent,
+    SupplierComponent,
+    FactureComponent,
+    ReglementComponent,
+    AdministrationComponent,
+    UtilisateurComponent,
+    RolefonctionnelComponent,
+    RoletechniqueComponent,
+    ModalUtilisateurComponent,
+    ModalRolefonctionnelComponent, // nouvel Modal Ajouter attention git
 
     ]
 })

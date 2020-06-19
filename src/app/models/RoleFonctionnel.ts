@@ -1,6 +1,9 @@
+import { Utilisateur } from "./Utilisateur";
+
 export class RoleFonctionnel {
     Id: number;
     Description: string;
+    Utilisateur: Utilisateur[];
 
     /**
      *
@@ -9,6 +12,7 @@ export class RoleFonctionnel {
         if (role !== undefined) {
             this.Id = role.Id;
             this.Description = role.Description;
+            this.Utilisateur = role.Utilisateur;
         }
     }
 }
