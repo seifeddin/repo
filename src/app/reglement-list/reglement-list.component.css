@@ -1,3 +1,10 @@
-table{
+table {
     width: 100%;
-}
+  }
+  .mat-row.hovered {
+      background: #f443362b;
+  }
+  
+  .mat-row.highlighted {
+    background: #f44336;
+  }

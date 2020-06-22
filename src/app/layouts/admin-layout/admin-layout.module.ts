@@ -25,35 +25,38 @@ import { ReglementListComponent } from 'app/reglement-list/reglement-list.compon
 
 // nouvel Modal Ajouter attention git
 import { ModalRolefonctionnelComponent } from 'app/rolefonctionnel/modal-rolefonctionnel/modal-rolefonctionnel.component';
+import { ModalRetenuComponent } from 'app/reglement-list/modal-retenu/modal-retenu.component';
 
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule
-  ],
-  declarations: [
-    DashboardComponent,
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
-    SupplierComponent,
-    FactureComponent,
-    ReglementComponent,
-    AdministrationComponent,
-    UtilisateurComponent,
-    RolefonctionnelComponent,
-    RoletechniqueComponent,
-    ModalUtilisateurComponent,
-    ModalRolefonctionnelComponent, // nouvel Modal Ajouter attention git
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule
+    ],
+    declarations: [
+        DashboardComponent,
+        UserProfileComponent,
+        TableListComponent,
+        TypographyComponent,
+        IconsComponent,
+        MapsComponent,
+        NotificationsComponent,
+        UpgradeComponent,
+        SupplierComponent,
+        FactureComponent,
+        ReglementComponent,
+        AdministrationComponent,
+        UtilisateurComponent,
+        RolefonctionnelComponent,
+        RoletechniqueComponent,
+        ModalUtilisateurComponent,
+        ReglementListComponent,
+        ModalRolefonctionnelComponent, // nouvel Modal Ajouter attention git
+        ModalRetenuComponent
 
     ]
 })

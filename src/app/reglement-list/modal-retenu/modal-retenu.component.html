@@ -8,88 +8,171 @@
                 <div class="row">
                     <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
                         <div mat-dialog-actions class="mb-5 align-self-end">
-                            <button mat-icon-button color="accent" (click)="addNew()">
-                                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-                            </button>
-                            <button mat-icon-button color="accent" (click)="onNoClick()">
-                                <mat-icon aria-label="Cancel">cancel</mat-icon>
-                            </button>
-                            <button mat-icon-button color="accent" (click)="Save()">
-                                <mat-icon aria-label="dynamic_feed">dynamic_feed</mat-icon>
-                            </button>
+                                <button mat-icon-button color="accent" (click)="Add()">
+                                    <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                                </button>
+                                <button mat-icon-button color="accent" (click)="Edit()">
+                                    <mat-icon aria-label="Edit">edit</mat-icon>
+                                </button>
+                                <button mat-icon-button color="accent" (click)="Delete()">
+                                    <mat-icon aria-label="Delete">delete</mat-icon>
+                                </button>
+                                <button mat-icon-button color="accent" (click)="Cancel()">
+                                    <mat-icon aria-label="Cancel">cancel</mat-icon>
+                                </button>
+                                <button mat-icon-button color="accent" (click)="Save()">
+                                    <mat-icon aria-label="dynamic_feed">dynamic_feed</mat-icon>
+                                </button>
+                                <button mat-icon-button color="accent" (click)="Validate()">
+                                    <mat-icon aria-label="done_outline">done_outline</mat-icon>
+                                </button>
                         </div>
-                        <div [formGroup]="formGroup">
+                      
+                        <div [formGroup]="formGroup" class="card">    
+                                <div class="row">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="DateValidation" placeholder="Date" formControlName="DateValidation"
+                                        [(ngModel)]="data.DateValidation">
+                                        <mat-datepicker-toggle matSuffix [for]="DateValidation"></mat-datepicker-toggle>
+                                        <mat-datepicker #Echeance></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
                             <div class="row">
                                 <div class="col-3">
                                     <mat-form-field color="accent">
-                                        <input matInput placeholder="Nom Utilisateur" formControlName="NomUtilisateur"
-                                            [(ngModel)]="Utilisateur.NomUtilisateur" name="NomUtilisateur">
+                                        <input matInput placeholder="Fournisseur" formControlName="NomPrenom"
+                                            [(ngModel)]="data.NomPrenom" name="NomPrenom">
                                     </mat-form-field>
-                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
-                                    </mat-error>
                                 </div>
                                 <div class="col-3">
                                     <mat-form-field color="accent">
-                                        <input matInput placeholder="Nom" formControlName="Nom"
-                                            [(ngModel)]="Utilisateur.Nom" name="Nom">
-                                    </mat-form-field>
-                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
-                                    </mat-error>
+                                        <input matInput placeholder="Matricule" formControlName="NumFrs"
+                                            [(ngModel)]="data.NumFrs" name="Matricule">
+                                    </mat-form-field>  
                                 </div>
                                 <div class="col-3">
-                                    <mat-form-field color="accent">
-                                        <input matInput placeholder="Prenom" formControlName="Prenom"
-                                            [(ngModel)]="Utilisateur.Prenom" name="Prenom">
-                                    </mat-form-field>
-                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
-                                    </mat-error>
-                                </div>
-                                <div class="col-3">
-                                    <mat-form-field color="accent">
-                                        <input matInput placeholder="Mot De Passe" formControlName="MotDePasse"
-                                            [(ngModel)]="Utilisateur.MotDePasse" name="MotDePasse">
-                                    </mat-form-field>
-                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
-                                    </mat-error>
-                                </div>
-                                <div class="col-3">
-                                    <mat-form-field color="accent">
-                                        <input matInput placeholder="Email" formControlName="Email"
-                                            [(ngModel)]="Utilisateur.Email" name="Email">
-                                    </mat-form-field>
-                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
-                                    </mat-error>
-                                </div>
-                                <div class="col-3">
-                                    <mat-form-field color="accent">
-                                        <input matInput placeholder="Telephone" formControlName="Telephone"
-                                            [(ngModel)]="Utilisateur.Telephone" name="Telephone">
-                                    </mat-form-field>
-                                    <mat-error *ngIf="utilisateurControl.hasError('required')">champ obligatoire
-                                    </mat-error>
-                                </div>
-                                <div class="col-3">
-                                    <mat-form-field>
-                                        <mat-label>Role fonctionnel</mat-label>
-                                        <mat-select [(ngModel)]="Utilisateur.IdRoleFonctionnel"
-                                            formControlName="IdRoleFonctionnel">
-                                            <mat-option>--</mat-option>
-                                            <mat-option *ngFor="let roleFonctionnel of roleFonctionnels"
-                                                [value]="roleFonctionnel.Id">
-                                                {{roleFonctionnel.Designation}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-12">
-                                    <mat-checkbox placeholder="EstActive" [(ngModel)]="Utilisateur.EstActive"
-                                        formControlName="EstActive" name="EstActive">Active
+                                    <mat-checkbox placeholder="Physique" formControlName="EstPhysique" [(ngModel)]="data.EstPhysique" name="EstPhysique">Est Physique
                                     </mat-checkbox>
                                 </div>
+                               <div class="col-3">    
+                                    <mat-checkbox placeholder="Morale" [(ngModel)]="data.EstMorale"
+                                        formControlName="EstMorale" name="EstMorale">Est Morale
+                                    </mat-checkbox>                                
+                                </div>
+
                             </div>
                         </div>
-                    </form>
+                         <div [formGroup]="formGroupRubrique">
+                <div class="row">
+                 <div class="col-4">
+                  <mat-form-field>
+                    <mat-label>Rubrique</mat-label>
+                    <mat-select [(ngModel)]="rowData.IdRubrique" formControlName="Rubrique"
+                      [formControl]="Rubrique" required>
+                      <mat-option>--</mat-option>
+                      <mat-option *ngFor="let rub of rubriques" [value]="rub.Id">
+                        {{rub.Designation}}
+                      </mat-option>
+                    </mat-select>
+               <!--    <mat-error *ngIf="Rubrique.hasError('required')">Le champs Rubrique est obligatoire!
+                    </mat-error>--> 
+                  </mat-form-field>
                 </div>
+               
+                <div class="col-4">
+                  <mat-form-field color="accent">
+                    <input matInput placeholder="MontantHt" formControlName="MontantHt" [(ngModel)]="rowData.MontantHt"
+                      name="MontantHt">
+                  </mat-form-field>
+                </div>
+                 <div class="col-4">
+                  <mat-form-field color="accent">
+                    <input matInput placeholder="Tva" formControlName="Tva" [(ngModel)]="rowData.Tva"
+                      name="Tva">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-4">
+                  <mat-form-field color="accent">
+                    <input matInput placeholder="MontantTtc" formControlName="MontantTtc" [(ngModel)]="rowData.MontantTtc"
+                      name="MontantTtc">
+                  </mat-form-field>
+                </div>
+
+                 <div class="col-4">
+                  <mat-form-field>
+                    <mat-label>Rubrique</mat-label>
+                    <mat-select [(ngModel)]="rowData.IdAnnexe" formControlName="Annexe"
+                      [formControl]="Annexe" required>
+                      <mat-option>--</mat-option>
+                      <mat-option *ngFor="let an of annexes" [value]="an.Id">
+                        {{an.Designation}}
+                      </mat-option>
+                    </mat-select>
+                   <!-- <mat-error *ngIf="Annexe.hasError('required')">Le champs Annexe est obligatoire!
+                    </mat-error> -->
+                  </mat-form-field>
+                </div>
+
+
+              </div>
+            
+            </div>
+          
+                    </form>
+
+           
+                  
+                </div>
+
+<div class="row">
+          <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" matSort matSortStart="desc">
+              <ng-container matColumnDef="Id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+                <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <ng-container matColumnDef="IdRubrique">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rubrique </th>
+                <td mat-cell *matCellDef="let element"> {{element.IdRubrique}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <ng-container matColumnDef="MontantHt">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Montant Ht </th>
+                <td mat-cell *matCellDef="let element"> {{element.MontantHt}} </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="Tva">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tva </th>
+                <td mat-cell *matCellDef="let element"> {{element.Tva}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="MontantTtc">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> MontantTtc </th>
+                <td mat-cell *matCellDef="let element"> {{element.MontantTtc}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                (click)="selection.toggle(row);getObject(row)"
+                [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}"
+                (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
+              <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+            </table>
+            <mat-paginator [pageSize]="2" [pageSizeOptions]="[2, 4, 6, 10, 20]">
+            </mat-paginator>
+          </div>
+        </div>
+
+
+
+
             </div>
         </div>
     </div>

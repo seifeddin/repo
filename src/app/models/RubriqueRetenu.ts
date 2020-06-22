@@ -1,9 +1,9 @@
 export class RubriqueRetenu {
-    Id: number;
-    Echeance?: Date;
-    DateValidation?: Date;
-    ValiderPar: string;
-    IdRetenu: number;
-    IdSuiviBancaire: number;
-    IdBonAPayer: number;
+Id: number;
+IdRubrique: number;
+IdRetenu: number;
+MontantHt?: number;
+Tva?: number;
+MontantTtc?: number;
+IdAnnexe?: number;
 }

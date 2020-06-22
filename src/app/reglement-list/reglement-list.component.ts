@@ -9,6 +9,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ReglementListService } from 'app/services/reglement-list.service';
 import { map } from 'rxjs/operators';
 import { BonAPayer } from 'app/models/BonAPayer';
+import { SelectionModel } from '@angular/cdk/collections';
+import { RetenuParams } from 'app/models/RetenuParams';
+import { ModalRetenuComponent } from './modal-retenu/modal-retenu.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationService } from 'app/services/notification.service';
+
 
 @Component({
     selector: 'app-reglement-list',
@@ -17,28 +23,40 @@ import { BonAPayer } from 'app/models/BonAPayer';
 })
 export class ReglementListComponent implements OnInit {
     // public displayedColumns = ['Id', 'IdBonAPayer', 'NumFrs', 'NumPreparation', 'IdRetenu', 'Date', 'Montant'];
-    public displayedColumns = ['Id', 'IdBonAPayer', 'NumFrs', 'NumPreparation', 'IdRetenu', 'DateValidation'];
-    public dataSource = new MatTableDataSource<Reglement>();
+    public displayedColumns = ['Id', 'IdBonAPayer', 'NumPreparation', 'IdRetenu', 'DateValidation'];
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    public dataSource = new MatTableDataSource<Reglement>();
+    selection = new SelectionModel<Reglement>(false, []);
+    SelectedRow: Reglement;
+    reglement: Reglement;
+    params: RetenuParams;
+
+
     // for autocomplete input
     myControl = new FormControl();
     filteredOptions: Observable<Lookup[]>;
     lstSuppliers: Lookup[];
     lstReglement: Reglement[];
 
-    constructor(private service: ReglementListService) { }
+
+    constructor(private service: ReglementListService, public dialog: MatDialog, private toastService: NotificationService) { }
 
     ngOnInit(): void {
+        this.reglement = new Reglement();
         this.service.getLookupFournisseur().subscribe((res) => {
-            debugger;
             this.lstSuppliers = res.map((item: { Id: number; Designation: string; }) => new Lookup(item.Id, item.Designation));
         });
-        this.GetAllReglement();
+        //this.GetAllReglement();
+
         this.filteredOptions = this.myControl.valueChanges
             .pipe(
-                map(value => this._filter(value))
-            );
+                map(value => this._filter(value)
+                )
+            )
+
+
+
 
     }
     // tslint:disable-next-line:use-life-cycle-interface
@@ -49,7 +67,7 @@ export class ReglementListComponent implements OnInit {
     GetAllReglement() {
 
         this.dataSource.data = [];
-        // this.service.GetAllByFrs()
+        // this.service.GetAllByFrs(1)
         //     .subscribe(res => {
         //         console.log(res);
         //         this.lstReglement = res;
@@ -59,15 +77,11 @@ export class ReglementListComponent implements OnInit {
 
     // autocomplete filter treatment
     private _filter(value: string): Lookup[] {
-
-        //  const filterValue = value.toLowerCase();
         if (this.lstSuppliers !== undefined) {
-
             // tslint:disable-next-line:radix
-
-            // tslint:disable-next-line:radix
-            this.service.GetAllByFrs(Number.parseInt(value)).subscribe(x => this.dataSource = new MatTableDataSource(x));
-            ;
+            this.service.GetAllByFrs(parseInt(value)).subscribe(x => {
+                this.dataSource.data = x;//.map(v => new Reglement(v)) as Reglement[];
+            });
             // tslint:disable-next-line:radix
             return this.lstSuppliers.filter(option => option.Id === Number.parseInt(value));
         }
@@ -77,6 +91,47 @@ export class ReglementListComponent implements OnInit {
         //  this.service.AddBonAPayer();
         //this.service.UpdateReglement()
     }
-    AddRetenu() { }
+    AddRetenu() {
+        if (this.SelectedRow.Id !== undefined || this.SelectedRow.Id !== NaN) {
+            this.params = new RetenuParams();
+            this.params.DateValidation = new Date(null);
+
+            this.service.GetFrsById(1).subscribe(x => {
+                this.params.NomPrenom = x.Nom + '' + x.Prenom;
+                this.params.EstMorale = x.EstPhysique; this.params.EstMorale = x.EstMorale;
+                this.params.NumFrs = x.Id;
+                this.params.DateValidation = this.SelectedRow.DateValidation;
+            });
+
+
+            const dialog = this.dialog.open(ModalRetenuComponent, {
+                id: 'dialog1',
+                height: '600px',
+                width: '1100px',
+                data: this.params
+            });
+            dialog.afterClosed().subscribe(result => {
+
+            });
+        } else { this.toastService.showWarning('Vous devez séléctionner un règlement', 'Warning'); }
+
+
+    }
+
+    getObject(row: Reglement) {
+        this.SelectedRow = row;
+        this.reglement.Id = row.Id;
+        this.reglement.Echeance = row.Echeance;
+        this.reglement.DateReglement = row.DateReglement;
+        this.reglement.DateValidation = row.DateValidation;
+        this.reglement.IdBonAPayer = row.IdBonAPayer;
+        this.reglement.IdRetenu = row.IdRetenu;
+        this.reglement.IdSuiviBancaire = row.IdSuiviBancaire;
+        this.reglement.Montant = row.Montant;
+        this.reglement.NumFrs = row.NumFrs;
+        this.reglement.NumPreparation = row.NumPreparation;
+        this.reglement.ValiderPar = row.ValiderPar;
+
+    }
 
 }

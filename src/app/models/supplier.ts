@@ -1,5 +1,5 @@
 export class Supplier {
-    id: number;
+    Id: number;
     RaisonSocial: string;
     Nom: string;
     Prenom: string;
@@ -7,6 +7,6 @@ export class Supplier {
     FraisGeneraux?: number;
     Solde: number;
     EcheanceDate: Date;
-    EstPhysique:boolean;
-    EstMorale:boolean;
+    EstPhysique: boolean;
+    EstMorale: boolean;
 }

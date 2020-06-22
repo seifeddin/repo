@@ -1,15 +1,176 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { RetenuParams } from 'app/models/RetenuParams';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Lookup } from 'app/models/Lookup';
+import { ReglementListService } from 'app/services/reglement-list.service';
+import { RubriqueRetenu } from 'app/models/RubriqueRetenu';
+import { SelectionModel } from '@angular/cdk/collections';
+import { NotificationService } from 'app/services/notification.service';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { SweetAlertService } from 'angular-sweetalert-service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-modal-retenu',
-  templateUrl: './modal-retenu.component.html',
-  styleUrls: ['./modal-retenu.component.css']
+    selector: 'app-modal-retenu',
+    templateUrl: './modal-retenu.component.html',
+    styleUrls: ['./modal-retenu.component.css']
 })
 export class ModalRetenuComponent implements OnInit {
+    formGroup: FormGroup;
+    rubriques: Lookup[];
+    annexes: Lookup[];
+    rubRetenus: RubriqueRetenu[];
+    rowData: RubriqueRetenu;
+    formGroupRubrique: FormGroup;
+    SelectedRow: RubriqueRetenu;
+    operation: string;
+    public displayedColumns = ['Id', 'IdRubrique', 'MontantHt', 'Tva', 'MontantTtc'];
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    public dataSource = new MatTableDataSource<RubriqueRetenu>();
+    selection = new SelectionModel<RubriqueRetenu>(false, []);
+    //modeReglementControl = new FormControl('', Validators.required);
+    constructor(public dialogRef: MatDialogRef<ModalRetenuComponent>, private serviceReglement: ReglementListService,
+        @Inject(MAT_DIALOG_DATA) public data: RetenuParams,
+        private toastService: NotificationService,
+        private alertService: SweetAlertService) { }
 
-  constructor() { }
+    ngOnInit(): void {
+        this.rubRetenus = [];
+        this.GetData();
+        this.rowData = new RubriqueRetenu();
+        this.formGroup = new FormGroup({
+            DateValidation: new FormControl(),
+            EstPhysique: new FormControl(),
+            EstMorale: new FormControl(),
+            NomPrenom: new FormControl(),
+            NumFrs: new FormControl()
+        });
 
-  ngOnInit(): void {
-  }
+        this.formGroup.disable();
+        this.serviceReglement.getLookupRubrique().subscribe(x => { this.rubriques = x });
+        this.serviceReglement.getLookupAnnexe().subscribe(x => { this.annexes = x });
+        this.formGroupRubrique = new FormGroup({
+            Rubrique: new FormControl(),
+            MontantHt: new FormControl(),
+            Tva: new FormControl(),
+            MontantTtc: new FormControl(),
+            Annexe: new FormControl()
+        });
+        this.formGroupRubrique.disable();
+    }
+    GetData() {
+        this.dataSource.data = this.rubRetenus;
+    }
+
+    Add() {
+        this.formGroupRubrique.enable();
+        this.operation = 'Create';
+        this.rowData = new RubriqueRetenu();
+
+    }
+    Edit() {
+        if (this.selection.selected.length > 0) {
+            this.operation = 'Edit';
+            this.formGroupRubrique.enable();
+        } else {
+            this.toastService.showError('Vous devez séléctionner un enregistrement', 'Erreur');
+        }
+
+    }
+    Save() {
+        Swal.fire({
+            title: 'Voulez vous enregistré ce détail de règlement?',
+            icon: 'warning',
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.value) {
+                if (this.operation === 'Create') {
+                    const index = this.dataSource.data.findIndex(x => x.IdRubrique == this.rowData.IdRubrique);
+                    if (index > 0) {
+                        this.toastService.showError('Ce rubrique existe déjà!', 'Error');
+                    } else {
+
+                        this.rubRetenus.push(this.rowData);
+                        Swal.fire(
+                            'Enregistrement règlement effectué avec succés',
+                            'success'
+                        )
+                        console.log(this.rubRetenus);
+                        this.GetData();
+                    }
+
+
+                }
+                if (this.operation === 'Edit') {
+
+                    const index = this.rubRetenus.findIndex(x => x.IdRubrique === this.SelectedRow.IdRubrique);
+                    if (index !== -1) {
+                        this.rubRetenus.splice(index, 1);
+                    }
+                    this.rubRetenus.push(this.rowData);
+
+                    Swal.fire('Enregistrement règlement effectué avec succés',
+                        'success')
+                    this.GetData();
+
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Enregistrement Annulé',
+                    'error'
+                )
+            }
+        })
+        this.formGroupRubrique.disable();
+
+    }
+    Delete() {
+
+        if (this.selection.selected.length > 0) {
+            Swal.fire({
+                title: 'Voulez vous supprimer ce détail de règlement?',
+                icon: 'warning',
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    const index = this.rubRetenus.findIndex(x => x.IdRubrique === this.SelectedRow.IdRubrique);
+                    if (index !== -1) {
+                        this.rubRetenus.splice(index, 1);
+                    }
+                    Swal.fire(
+                        'Préparation règlement supprimé avec succés',
+                        'success'
+                    )
+                    this.GetData();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire(
+                        'Suppression Annulé',
+                        'error'
+                    )
+                }
+            })
+        } else {
+            this.toastService.showError('Vous devez séléctionner un enregistrement', 'Erreur');
+        }
+    }
+    Cancel() {
+        this.dialogRef.close();
+
+    }
+
+    getObject(row: RubriqueRetenu) {
+        this.SelectedRow = row;
+        this.rowData.Id = row.Id;
+        this.rowData.IdRubrique = row.IdRubrique;
+        this.rowData.IdRetenu = row.IdRetenu;
+        this.rowData.IdAnnexe = row.IdAnnexe;
+        this.rowData.MontantHt = row.MontantHt;
+        this.rowData.MontantTtc = row.MontantTtc;
+        this.rowData.Tva = row.Tva;
+    }
 
 }

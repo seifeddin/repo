@@ -14,9 +14,6 @@ import { NotificationService } from 'app/services/notification.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { HttpResponse } from '@angular/common/http';
 
-
-
-
 @Component({
     selector: 'app-reglement',
     templateUrl: './reglement.component.html',
@@ -30,10 +27,6 @@ export class ReglementComponent implements OnInit {
     edit = '';
     SelectedRow: ReglementDetail;
 
-
-    reglements: ReglementDetail[] = [
-        { Id: 1, Echeance: new Date('01/06/2019'), IdModeReglement: 1, IdCaisse: 1, IdBanque: 1, Montant: 300, IdReglement: 1 },
-        { Id: 2, Echeance: new Date('01/06/2019'), IdModeReglement: 2, IdCaisse: 1, IdBanque: 2, Montant: 200, IdReglement: 1 }];
     // tslint:disable-next-line:member-ordering
     modeReglementControl = new FormControl('', Validators.required);
     modeReglement: Lookup[];
@@ -48,7 +41,6 @@ export class ReglementComponent implements OnInit {
     }
     ngOnInit(): void {
         this.regDetail = new ReglementDetail();
-
         this.formGroup = new FormGroup({
             Echeance: new FormControl(),
             ModeReglement: new FormControl(),
@@ -157,7 +149,6 @@ export class ReglementComponent implements OnInit {
 
     }
     getObject(row: ReglementDetail) {
-        console.log(row);
         this.SelectedRow = row;
         this.regDetail.Id = row.Id;
         this.regDetail.Echeance = row.Echeance;

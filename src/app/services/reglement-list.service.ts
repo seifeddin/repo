@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Reglement } from 'app/models/Reglement';
 import { environment } from 'environments/environment';
 import { BonAPayer } from 'app/models/BonAPayer';
+import { Supplier } from 'app/models/supplier';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
+import { RubriqueRetenu } from 'app/models/RubriqueRetenu';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +18,13 @@ export class ReglementListService {
         return this.http.get(`${environment.apiUrl}/api/Fournisseur/GetLookupSuppliers`);
     }
     GetAllByFrs(id: number): Observable<Reglement[]> {
-        return this.http.get<Reglement[]>(`${environment.apiUrl}/api/Reglement/GetReglementDtosByFournissuer/` + id);
+        if (id !== undefined && id !== NaN) {
+            return this.http.get<Reglement[]>(`${environment.apiUrl}/api/Fournisseur/GetReglementDtosByFournissuer/` + id);
+        }
+        return null;
+    }
+    GetFrsById(id:number):Observable<Supplier>{
+        return this.http.get<Supplier>(`${environment.apiUrl}/api/Fournisseur/GetFournisseur/` + id);
     }
 
     AddBonAPayer(bon: BonAPayer): Observable<BonAPayer> {
@@ -24,4 +33,25 @@ export class ReglementListService {
     UpdateReglement(reg: Reglement): Observable<Reglement> {
         return this.http.put<Reglement>(`${environment.apiUrl}api/Reglement`, reg);
     }
+    getLookupRubrique(): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/api/Rubrique/GetLookup`);
+    }
+    getLookupAnnexe(): Observable<any> {
+        return this.http.get(`${environment.apiUrl}/api/Annexe/GetLookup`);
+    }
+
+    // Get(id: number): Observable<RubriqueRetenu[]> {
+    //     return this.http.get<RubriqueRetenu[]>(`${environment.apiUrl}/api/RubriqueRetenu/GetByReglement/` + id);
+    // }
+    // Add(data: RubriqueRetenu): Observable<RubriqueRetenu> {
+    //     return this.http.post<RubriqueRetenu>(`${environment.apiUrl}/api/RubriqueRetenu`, data);
+    // }
+    // Edit(data: RubriqueRetenu): Observable<RubriqueRetenu> {
+    //     return this.http.put<RubriqueRetenu>(`${environment.apiUrl}/api/RubriqueRetenu`, data);
+    // }
+    // Delete(id: number): Observable<RubriqueRetenu> {
+    //     // tslint:disable-next-line:max-line-length
+    //     return this.http.delete<RubriqueRetenu>(`${environment.apiUrl}/api/RubriqueRetenu`, { params: new HttpParams().set('id', id.toString()) });
+    // }
+
 }
