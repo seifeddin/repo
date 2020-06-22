@@ -2,28 +2,28 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header card-header-danger">
-                <h4 class="card-title " mat-dialog-title>{{Operation}} Utilisateur</h4>
+                <h4 class="card-title " mat-dialog-title>Retenu</h4>
             </div>
             <div class="card-body">
                 <div class="row">
                     <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
-                        <div mat-dialog-actions class="mb-5 align-self-end">
-                                <button mat-icon-button color="accent" (click)="Add()">
+                        <div mat-dialog-actions  class="mb-5 align-self-end">
+                                <button mat-icon-button color="accent" [disabled]="isDisabled" (click)="Add()">
                                     <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
                                 </button>
-                                <button mat-icon-button color="accent" (click)="Edit()">
+                                <button mat-icon-button color="accent" [disabled]="isDisabled" (click)="Edit()">
                                     <mat-icon aria-label="Edit">edit</mat-icon>
                                 </button>
-                                <button mat-icon-button color="accent" (click)="Delete()">
+                                <button mat-icon-button color="accent" [disabled]="isDisabled" (click)="Delete()">
                                     <mat-icon aria-label="Delete">delete</mat-icon>
                                 </button>
                                 <button mat-icon-button color="accent" (click)="Cancel()">
                                     <mat-icon aria-label="Cancel">cancel</mat-icon>
                                 </button>
-                                <button mat-icon-button color="accent" (click)="Save()">
+                                <button mat-icon-button color="accent" [disabled]="isDisabled"  (click)="Save()">
                                     <mat-icon aria-label="dynamic_feed">dynamic_feed</mat-icon>
                                 </button>
-                                <button mat-icon-button color="accent" (click)="Validate()">
+                                <button mat-icon-button color="accent"  [disabled]="isDisabled" (click)="Validate()">
                                     <mat-icon aria-label="done_outline">done_outline</mat-icon>
                                 </button>
                         </div>
@@ -113,17 +113,12 @@
                     </mat-error> -->
                   </mat-form-field>
                 </div>
-
-
               </div>
             
             </div>
           
-                    </form>
-
-           
-                  
-                </div>
+         </form>     
+        </div>
 
 <div class="row">
           <div class="table-responsive">

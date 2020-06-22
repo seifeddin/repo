@@ -31,6 +31,7 @@ export class ReglementListComponent implements OnInit {
     SelectedRow: Reglement;
     reglement: Reglement;
     params: RetenuParams;
+    selectedFrs: number;
 
 
     // for autocomplete input
@@ -38,6 +39,7 @@ export class ReglementListComponent implements OnInit {
     filteredOptions: Observable<Lookup[]>;
     lstSuppliers: Lookup[];
     lstReglement: Reglement[];
+    isDisabled = true;
 
 
     constructor(private service: ReglementListService, public dialog: MatDialog, private toastService: NotificationService) { }
@@ -79,12 +81,21 @@ export class ReglementListComponent implements OnInit {
     private _filter(value: string): Lookup[] {
         if (this.lstSuppliers !== undefined) {
             // tslint:disable-next-line:radix
-            this.service.GetAllByFrs(parseInt(value)).subscribe(x => {
-                this.dataSource.data = x;//.map(v => new Reglement(v)) as Reglement[];
-            });
+
             // tslint:disable-next-line:radix
             return this.lstSuppliers.filter(option => option.Id === Number.parseInt(value));
         }
+    }
+
+    getList(IdFrs) {
+        this.selectedFrs = IdFrs;
+        this.GetData(IdFrs);
+    }
+
+    GetData(value) {
+        this.service.GetAllByFrs(value).subscribe(x => {
+            this.dataSource.data = x;//.map(v => new Reglement(v)) as Reglement[];
+        });
     }
 
     Generate() {
@@ -95,6 +106,7 @@ export class ReglementListComponent implements OnInit {
         if (this.SelectedRow.Id !== undefined || this.SelectedRow.Id !== NaN) {
             this.params = new RetenuParams();
             this.params.DateValidation = new Date(null);
+            this.params.Reglement = this.SelectedRow;
 
             this.service.GetFrsById(1).subscribe(x => {
                 this.params.NomPrenom = x.Nom + '' + x.Prenom;
@@ -111,7 +123,7 @@ export class ReglementListComponent implements OnInit {
                 data: this.params
             });
             dialog.afterClosed().subscribe(result => {
-
+                this.GetData(this.selectedFrs);
             });
         } else { this.toastService.showWarning('Vous devez séléctionner un règlement', 'Warning'); }
 
@@ -119,6 +131,14 @@ export class ReglementListComponent implements OnInit {
     }
 
     getObject(row: Reglement) {
+        debugger;
+        console.log(row.IdRetenu);
+        if (row.IdRetenu == null) {
+            this.isDisabled = false;
+        } else {
+            this.isDisabled = true;
+        }
+
         this.SelectedRow = row;
         this.reglement.Id = row.Id;
         this.reglement.Echeance = row.Echeance;

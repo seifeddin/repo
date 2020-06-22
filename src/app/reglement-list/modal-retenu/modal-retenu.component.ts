@@ -12,6 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SweetAlertService } from 'angular-sweetalert-service';
 import Swal from 'sweetalert2';
+import { Retenu } from 'app/models/Retenu';
 
 @Component({
     selector: 'app-modal-retenu',
@@ -26,7 +27,9 @@ export class ModalRetenuComponent implements OnInit {
     rowData: RubriqueRetenu;
     formGroupRubrique: FormGroup;
     SelectedRow: RubriqueRetenu;
+    retenu: Retenu;
     operation: string;
+    isDisabled = false;
     public displayedColumns = ['Id', 'IdRubrique', 'MontantHt', 'Tva', 'MontantTtc'];
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -39,9 +42,11 @@ export class ModalRetenuComponent implements OnInit {
         private alertService: SweetAlertService) { }
 
     ngOnInit(): void {
+
         this.rubRetenus = [];
         this.GetData();
         this.rowData = new RubriqueRetenu();
+        this.retenu = new Retenu();
         this.formGroup = new FormGroup({
             DateValidation: new FormControl(),
             EstPhysique: new FormControl(),
@@ -159,6 +164,25 @@ export class ModalRetenuComponent implements OnInit {
     }
     Cancel() {
         this.dialogRef.close();
+
+    }
+    Validate() {
+        this.isDisabled = true;
+        this.retenu.RubriqueRetenu = this.rubRetenus;
+        console.log(this.rubRetenus);
+        this.retenu.NumeroCertficat = 1;
+        this.retenu.DateValidation = new Date();
+        this.retenu.ValiderPar = 'Aida';
+        //   this.retenu.Reglement = [];
+        let AddedRetenu: Retenu;
+        this.serviceReglement.AddRetenu(this.retenu).subscribe(x => {
+            AddedRetenu = x;
+            debugger;
+            this.data.Reglement.IdRetenu = x.Id;
+            this.serviceReglement.UpdateReglement(this.data.Reglement).subscribe(x => { return x });
+        });
+
+
 
     }
 

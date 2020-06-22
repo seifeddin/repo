@@ -7,6 +7,7 @@ import { Supplier } from 'app/models/supplier';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { RubriqueRetenu } from 'app/models/RubriqueRetenu';
+import { Retenu } from 'app/models/Retenu';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,7 @@ export class ReglementListService {
         }
         return null;
     }
-    GetFrsById(id:number):Observable<Supplier>{
+    GetFrsById(id: number): Observable<Supplier> {
         return this.http.get<Supplier>(`${environment.apiUrl}/api/Fournisseur/GetFournisseur/` + id);
     }
 
@@ -31,7 +32,7 @@ export class ReglementListService {
         return this.http.post<BonAPayer>(`${environment.apiUrl}/api/BonAPayer/`, bon)
     }
     UpdateReglement(reg: Reglement): Observable<Reglement> {
-        return this.http.put<Reglement>(`${environment.apiUrl}api/Reglement`, reg);
+        return this.http.put<Reglement>(`${environment.apiUrl}/api/Reglement`, reg);
     }
     getLookupRubrique(): Observable<any> {
         return this.http.get(`${environment.apiUrl}/api/Rubrique/GetLookup`);
@@ -40,6 +41,11 @@ export class ReglementListService {
         return this.http.get(`${environment.apiUrl}/api/Annexe/GetLookup`);
     }
 
+    AddRetenu(retenu: Retenu): Observable<Retenu> {
+        debugger;
+        console.log(retenu);
+        return this.http.post<Retenu>(`${environment.apiUrl}/api/Retenu/Validate`, retenu);
+    }
     // Get(id: number): Observable<RubriqueRetenu[]> {
     //     return this.http.get<RubriqueRetenu[]>(`${environment.apiUrl}/api/RubriqueRetenu/GetByReglement/` + id);
     // }
