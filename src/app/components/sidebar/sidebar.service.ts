@@ -27,11 +27,7 @@ export class SidebarService {
                 {
                     title: 'Generation',
                     path: '/reglement-list',
-                },
-                {
-                    title: 'Facture',
-                    path: '/facture',
-                },
+                }
             ]
         }
     ];

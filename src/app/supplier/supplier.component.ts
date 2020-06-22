@@ -107,7 +107,6 @@ export class SupplierComponent implements OnInit {
     }
 
     ReadPF() {
-        debugger;
         this.supplierService.getPdfDocument()
             .subscribe(
                 (data) => {
@@ -116,7 +115,6 @@ export class SupplierComponent implements OnInit {
     }
 
     openFileForPrint(data1: HttpResponse<any>) {
-        debugger;
         console.log(data1.body);
         const binaryData = [];
         binaryData.push(data1);

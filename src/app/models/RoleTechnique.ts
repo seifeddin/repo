@@ -1,20 +1,18 @@
-import { Utilisateur } from "./Utilisateur";
 import { FoncTechRole } from "./FoncTechRole";
 
-export class RoleFonctionnel {
+export class RoleTechnique {
+
     Id: number;
     Description: string;
-    Utilisateur: Utilisateur[];
     FoncTechRole: FoncTechRole[];
 
     /**
      *
      */
-    constructor(role: RoleFonctionnel) {
+    constructor(role: RoleTechnique) {
         if (role !== undefined) {
             this.Id = role.Id;
             this.Description = role.Description;
-            this.Utilisateur = role.Utilisateur;
             this.FoncTechRole = role.FoncTechRole;
         }
     }

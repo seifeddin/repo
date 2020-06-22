@@ -18,7 +18,6 @@ export class SupplierService {
         return this.http.get(`${environment.apiUrl}/api/Fournisseur/GetLookupSuppliers`);
     }
     getPdfDocument(): Observable<any> {
-        debugger;
         const headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
         return this.http
             .get(`${environment.apiUrl}/api/Fournisseur/getFournisseurReport`,

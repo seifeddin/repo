@@ -34,6 +34,13 @@ export class RolefonctionnelComponent implements OnInit {
         });
     }
 
+    ngAfterViewInit(): void {
+        this.dataSourceRoleFonctionnel.sort = this.sort;
+        this.dataSourceRoleFonctionnel.paginator = this.paginator;
+        this.dataSourceUtilisateur.sort = this.sort;
+        this.dataSourceUtilisateur.paginator = this.paginator;
+
+    }
     public getRoleFonctionnels() {
         this.service.getRoleFonctionnels().subscribe(res => {
             this.dataSourceRoleFonctionnel.data = res.map(x => new RoleFonctionnel(x)) as RoleFonctionnel[];
@@ -42,7 +49,6 @@ export class RolefonctionnelComponent implements OnInit {
     }
 
     public getRoleFonctionnelById(id) {
-        debugger;
         this.service.getRoleFonctionnelById(id).subscribe(res => {
             console.log(res.Utilisateur);
             this.dataSourceUtilisateur.data = res.Utilisateur.map(x => new Utilisateur(x)) as Utilisateur[];
@@ -52,7 +58,7 @@ export class RolefonctionnelComponent implements OnInit {
     public Create() {
         const dialog = this.dialog.open(ModalRolefonctionnelComponent, {
             id: 'dialog1',
-            height: '400px',
+            height: '450px',
             width: '850px',
             data: { id: null }
         });
@@ -63,7 +69,7 @@ export class RolefonctionnelComponent implements OnInit {
     public Edit(Id) {
         const dialog = this.dialog.open(ModalRolefonctionnelComponent, {
             id: 'dialog2',
-            height: '400px',
+            height: '450px',
             width: '850px',
             data: { id: Id }
         });
@@ -73,14 +79,14 @@ export class RolefonctionnelComponent implements OnInit {
     }
     public Delete(Id) {
         Swal.fire({
-            title: 'Voulez vous supprimer cet utilisateur ?',
+            title: 'Voulez vous supprimer cet role fonctionnel ?',
             icon: 'warning',
             showCancelButton: true,
         }).then((result) => {
             if (result.value) {
-                this.service.Delete(Id).subscribe(x => {
+                this.service.DeleteRoleFonctionnel(Id).subscribe(x => {
                     Swal.fire(
-                        'Utilisateur supprimé avec succés',
+                        'role fonctionnel supprimé avec succés',
                         'success'
                     );
                     this.getRoleFonctionnels();
