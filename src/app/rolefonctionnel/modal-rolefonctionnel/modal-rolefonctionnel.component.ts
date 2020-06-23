@@ -10,102 +10,101 @@ import Swal from 'sweetalert2';
 import { isDataSource } from '@angular/cdk/collections';
 
 @Component({
-    selector: 'app-modal-rolefonctionnel',
-    templateUrl: './modal-rolefonctionnel.component.html',
-    styleUrls: ['./modal-rolefonctionnel.component.css']
+  selector: 'app-modal-rolefonctionnel',
+  templateUrl: './modal-rolefonctionnel.component.html',
+  styleUrls: ['./modal-rolefonctionnel.component.css']
 })
 export class ModalRolefonctionnelComponent implements OnInit {
-    formGroup: FormGroup;
-    Operation: string;
-    RoleFonctionnel: RoleFonctionnel;
-    Utilisateurs: Utilisateur[];
-    roleFonctionnelControl = new FormControl('', Validators.required);
-    constructor(public dialogRef: MatDialogRef<ModalRolefonctionnelComponent>,
-        private service: AdminstrationService,
-        private alertService: SweetAlertService,
-        private toastService: NotificationService,
-        @Inject(MAT_DIALOG_DATA) public data: any) { }
+  formGroup: FormGroup;
+  Operation: string;
+  RoleFonctionnel: RoleFonctionnel;
+  Utilisateurs: Utilisateur[];
+  roleFonctionnelControl = new FormControl('', Validators.required);
+  constructor(public dialogRef: MatDialogRef<ModalRolefonctionnelComponent>,
+    private service: AdminstrationService,
+    private alertService: SweetAlertService,
+    private toastService: NotificationService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-        this.formGroup = new FormGroup({
-            Description: new FormControl(),
-            Utilisateur: new FormControl(),
+    this.formGroup = new FormGroup({
+      Description: new FormControl(),
+      Utilisateur: new FormControl(),
+    });
+
+    this.formGroup.disable();
+    this.RoleFonctionnel = new RoleFonctionnel(undefined);
+    this.Operation = this.data?.id !== null && this.data?.id !== undefined ? 'Modifier' : 'Ajouter';
+    let ids = [];
+    this.service.getUtilisateurs().subscribe(x => {
+      this.Utilisateurs = x;
+      if (this.Operation === 'Modifier') {
+        this.service.getRoleFonctionnelById(this.data.id).subscribe(x => {
+          const defaultValue: Utilisateur[] = [
+          ];
+          let i = 0;
+          x.Utilisateur.forEach(element => {
+            defaultValue[i] = this.Utilisateurs.find(use => use.Id === element.Id);
+            i++;
+          });
+          this.RoleFonctionnel = new RoleFonctionnel(x);
+          this.RoleFonctionnel.Utilisateur = defaultValue;
+          this.formGroup.get('Utilisateur').setValue(defaultValue);
         });
-
-        this.formGroup.disable();
-        this.RoleFonctionnel = new RoleFonctionnel(undefined);
-        this.Operation = this.data?.id !== null && this.data?.id !== undefined ? 'Modifier' : 'Ajouter';
-        let ids = [];
-        this.service.getUtilisateurs().subscribe(x => {
-            this.Utilisateurs = x;
-            if (this.Operation === 'Modifier') {
-                this.service.getRoleFonctionnelById(this.data.id).subscribe(x => {
-
-                    const defaultValue: Utilisateur[] = [
-                        this.Utilisateurs[0],
-                        this.Utilisateurs[2],
-                    ];
-                    let i = 0;
-                    /* x.Utilisateur.forEach(element => {
-                       defaultValue[i] = this.Utilisateurs.find(use => use.Id === element.Id);
-                       i++;
-                     });*/
-                    this.formGroup.get('Utilisateur').setValue(defaultValue);
-                    this.RoleFonctionnel = new RoleFonctionnel(x);
-                });
-            }
-        });
+      }
+    });
 
 
-    }
+  }
 
-    submit(): void { }
+  submit(): void { }
 
-    addNew() {
-        this.formGroup.enable();
-    }
+  addNew() {
+    this.formGroup.enable();
+  }
 
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
-    public Save() {
+  public Save() {
 
-        Swal.fire({
-            title: 'Voulez vous enregistré ce détail de règlement?',
-            icon: 'warning',
-            showCancelButton: true,
-        }).then((result) => {
-            if (result.value) {
-                if (this.Operation === 'Modifier') {
-                    this.service.EditRoleFonctionnel(this.RoleFonctionnel).subscribe(x => {
+    Swal.fire({
+      title: 'Voulez vous enregistré ce role fonctionnel?',
+      icon: 'warning',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.value) {
+        if (this.Operation === 'Modifier') {
+          console.log(this.RoleFonctionnel);
+          this.service.EditRoleFonctionnel(this.RoleFonctionnel).subscribe(x => {
 
-                        Swal.fire(
-                            'Modification Utilisateur effectué avec succés',
-                            'success'
-                        );
-                    });
-                }
-                if (this.Operation === 'Ajouter') {
-                    console.log(this.RoleFonctionnel);
-                    this.service.AddRoleFonctionnel(this.RoleFonctionnel).subscribe(
-                        x => {
+            Swal.fire(
+              'Modification role fonctionnel effectué avec succés',
+              'success'
+            );
+          });
+        }
+        if (this.Operation === 'Ajouter') {
+          console.log(this.RoleFonctionnel);
+          this.service.AddRoleFonctionnel(this.RoleFonctionnel).subscribe(
+            x => {
 
-                            Swal.fire(
-                                'Enregistrement Utilisateur effectué avec succés',
-                                'success'
-                            )
-                        });
-                }
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire(
-                    'Enregistrement Annulé',
-                    'error'
-                )
-            }
-        })
-        this.formGroup.disable();
-    }
+              Swal.fire(
+                'Enregistrement role fonctionnel effectué avec succés',
+                'success'
+              )
+            });
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Enregistrement Annulé',
+          'error'
+        )
+      }
+    })
+    this.formGroup.disable();
+  }
 
 }

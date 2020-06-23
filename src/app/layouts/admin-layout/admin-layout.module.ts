@@ -26,6 +26,9 @@ import { ReglementListComponent } from 'app/reglement-list/reglement-list.compon
 // nouvel Modal Ajouter attention git
 import { ModalRolefonctionnelComponent } from 'app/rolefonctionnel/modal-rolefonctionnel/modal-rolefonctionnel.component';
 import { ModalRetenuComponent } from 'app/reglement-list/modal-retenu/modal-retenu.component';
+// nouvel Modal Ajouter attention git
+import { ModalAffiliationRoleComponent } from 'app/roletechnique/modal-affiliation-role/modal-affiliation-role.component';
+
 
 
 
@@ -55,8 +58,9 @@ import { ModalRetenuComponent } from 'app/reglement-list/modal-retenu/modal-rete
         RoletechniqueComponent,
         ModalUtilisateurComponent,
         ReglementListComponent,
-        ModalRolefonctionnelComponent, // nouvel Modal Ajouter attention git
-        ModalRetenuComponent
+        ModalRolefonctionnelComponent,
+        ModalRetenuComponent,
+        ModalAffiliationRoleComponent,// nouvel Modal Ajouter attention git
 
     ]
 })

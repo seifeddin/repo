@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Lookup } from 'app/models/Lookup';
 import { RoleFonctionnel } from 'app/models/RoleFonctionnel';
+import { RoleTechnique } from 'app/models/RoleTechnique';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,33 @@ export class AdminstrationService {
 
   AddRoleFonctionnel(data: RoleFonctionnel): Observable<RoleFonctionnel> {
     return this.http.post<RoleFonctionnel>(`${environment.apiUrl}/api/RoleFonctionnel`, data);
+  }
+
+  DeleteRoleFonctionnel(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${environment.apiUrl}/api/RoleFonctionnel/DeleteRoleFonctionnel/` + id);
+  }
+
+  GetRoleTechniqueDtosByRoleFonctionel(id): Observable<RoleTechnique[]> {
+
+    return this.http.get<RoleTechnique[]>(`${environment.apiUrl}/api/RoleFonctionnel/GetRoleTechniqueDtosByRoleFonctionel/` + id);
+  }
+
+  getNotAffectedRoleTechnique(id): Observable<RoleTechnique[]> {
+
+    return this.http.get<RoleTechnique[]>(`${environment.apiUrl}/api/RoleFonctionnel/GetNotAffectedRoleTechnique/` + id);
+
+
+  }
+  AddRoleTechniqueToRoleFonctionnel(data: RoleFonctionnel): Observable<RoleFonctionnel> {
+
+    console.log(data);
+    return this.http.post<RoleFonctionnel>(`${environment.apiUrl}/api/RoleFonctionnel/AddRoleTechniqueToRoleFonctionnel`, data);
+
+  }
+
+  DeleteRoleTechniqueFormFonctionnelRole(roleTechniqueId, roleFonctionnelId): Observable<boolean> {
+
+    return this.http.delete<boolean>(`${environment.apiUrl}/api/RoleFonctionnel/DeleteRoleTechniqueFormFonctionnelRole/` + roleTechniqueId + `/` + roleFonctionnelId);
+
   }
 }

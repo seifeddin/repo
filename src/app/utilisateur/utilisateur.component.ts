@@ -26,6 +26,11 @@ export class UtilisateurComponent implements OnInit {
     this.getUsers();
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
   getUsers() {
     this.service.getUtilisateurs().subscribe(res => {
       this.dataSource.data = res.map(x => new Utilisateur(x)) as Utilisateur[];
