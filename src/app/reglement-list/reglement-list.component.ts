@@ -32,6 +32,7 @@ export class ReglementListComponent implements OnInit {
     reglement: Reglement;
     params: RetenuParams;
     selectedFrs: number;
+    bonAPayer: BonAPayer;
 
 
     // for autocomplete input
@@ -50,16 +51,10 @@ export class ReglementListComponent implements OnInit {
             this.lstSuppliers = res.map((item: { Id: number; Designation: string; }) => new Lookup(item.Id, item.Designation));
         });
         //this.GetAllReglement();
-
         this.filteredOptions = this.myControl.valueChanges
             .pipe(
                 map(value => this._filter(value)
-                )
-            )
-
-
-
-
+                ))
     }
     // tslint:disable-next-line:use-life-cycle-interface
     ngAfterViewInit(): void {
@@ -94,11 +89,15 @@ export class ReglementListComponent implements OnInit {
 
     GetData(value) {
         this.service.GetAllByFrs(value).subscribe(x => {
-            this.dataSource.data = x;//.map(v => new Reglement(v)) as Reglement[];
+            this.dataSource.data = x;
         });
     }
 
     Generate() {
+        this.bonAPayer = new BonAPayer();
+        this.bonAPayer.DateValidation = new Date();
+
+
         //  this.service.AddBonAPayer();
         //this.service.UpdateReglement()
     }
