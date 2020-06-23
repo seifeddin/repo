@@ -73,10 +73,16 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div class="col-12">
+                <div class="col-6">
                   <mat-form-field color="accent">
                     <input matInput placeholder="Montant" formControlName="Montant" [(ngModel)]="regDetail.Montant"
                       name="Montant">
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-form-field color="accent">
+                    <input disabled='true' matInput placeholder="Totale Reglement" [(value)]="TotalReglement"
+                      name="TotalReglement">
                   </mat-form-field>
                 </div>
               </div>

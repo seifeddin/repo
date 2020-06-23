@@ -93,7 +93,7 @@
                   <ng-container *ngIf="index!==editRowId">
                     <span matInput title="Cliquer pour modifier">{{element.MontantAPayes}}
                       <button mat-icon-button matSuffix [for]="MontantAPayes" color="primary"
-                        (click)="edit(index,'MontantAPayes')">
+                        (click)="edit(index,'MontantAPayes',element)">
                         <mat-icon type='button' aria-hidden="false" aria-label="Example home icon">create
                         </mat-icon>
                       </button>

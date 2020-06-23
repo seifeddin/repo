@@ -33,6 +33,7 @@ export class ReglementComponent implements OnInit {
     caisses: Lookup[];
     banques: Lookup[];
     regDetail: ReglementDetail;
+    TotalReglement: number;
 
     constructor(public dialogRef: MatDialogRef<ReglementComponent>, private service: ReglementService,
         @Inject(MAT_DIALOG_DATA) public data: ReglementPrams, private alertService: SweetAlertService,
@@ -47,6 +48,8 @@ export class ReglementComponent implements OnInit {
             Caisse: new FormControl(),
             Banque: new FormControl(),
             Montant: new FormControl(),
+            //TotalReglement: new FormControl()
+
 
         });
         this.formGroup.disable();
@@ -58,6 +61,7 @@ export class ReglementComponent implements OnInit {
         this.regDetail.Echeance = new Date();
         this.regDetail.IdReglement = this.data.IdReglement;
         this.regDetail.Montant = 0;
+        this.TotalReglement = this.data.MontantTotal;
         this.GetData();
 
     }

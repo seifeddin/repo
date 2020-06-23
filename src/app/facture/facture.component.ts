@@ -56,8 +56,10 @@ export class FactureComponent implements OnInit {
             this.dataSource.data = res.map(x => new Facture(x)) as Facture[];
         });
     }
-    edit(row, element) {
+    edit(row, element, obj) {
         this.editRowId = row;
+        obj.MontantAPayes = obj.MontantTotale - obj.MontantRegle;
+        console.log(element);
         setTimeout(() => {
             this.inputs.find(x => x.nativeElement.getAttribute('name') == element).nativeElement.focus()
 
