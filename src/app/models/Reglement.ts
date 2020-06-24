@@ -1,3 +1,5 @@
+import { ReglementFacture } from "./ReglementFacture";
+
 export class Reglement {
     Id: number;
     Echeance: number;
@@ -10,4 +12,5 @@ export class Reglement {
     NumFrs: number;
     NumPreparation: string;
     Montant: number;
+    ReglementFacture: Array<ReglementFacture>;
 }
