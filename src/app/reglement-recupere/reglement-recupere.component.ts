@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { BonAPayer } from 'app/models/BonAPayer';
 import { MatTableDataSource } from '@angular/material/table';
-import { BonAPayerService } from 'app/services/bon-apayer.service';
+import { BonAPayer } from 'app/models/BonAPayer';
 import { SelectionModel } from '@angular/cdk/collections';
+import { BonAPayerService } from 'app/services/bon-apayer.service';
 
 @Component({
-    selector: 'app-bon-apayer',
-    templateUrl: './bon-apayer.component.html',
-    styleUrls: ['./bon-apayer.component.css']
+    selector: 'app-reglement-recupere',
+    templateUrl: './reglement-recupere.component.html',
+    styleUrls: ['./reglement-recupere.component.css']
 })
-export class BonAPayerComponent implements OnInit {
+export class ReglementRecupereComponent implements OnInit {
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -24,15 +24,15 @@ export class BonAPayerComponent implements OnInit {
     ngOnInit(): void {
         this.GetData();
     }
+
     // tslint:disable-next-line:use-life-cycle-interface
     ngAfterViewInit(): void {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
     }
 
-
     GetData() {
-        this.service.getAll().subscribe(x => {
+        this.service.GetReglementRecuperes().subscribe(x => {
             this.dataSource.data = x
         });
     }
@@ -40,15 +40,11 @@ export class BonAPayerComponent implements OnInit {
         this.selectedRow = row;
     }
     Validate() {
-        this.selectedRow.DateValidation = new Date();
-        this.selectedRow.ValiderPar = "Aida";
+        this.selectedRow.EstRegle = true;
         this.service.Update(this.selectedRow).subscribe(x => { this.GetData(); return x; });
     }
 
     TotalSolde() {
         return this.dataSource.filteredData.map(t => t.MontantTotalEcheance).reduce((acc, value) => acc + value, 0);
     }
-
-
-
 }

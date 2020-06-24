@@ -42,7 +42,7 @@ export class SidebarService {
                 },
                 {
                     title: 'Recupération',
-                    path: '/reglement-list',
+                    path: '/reglement-recupere',
                 }
             ]
         }

@@ -44,7 +44,7 @@ import { BrowserModule } from '@angular/platform-browser';
     declarations: [
         AppComponent,
         AdminLayoutComponent,
-        LoginComponent,
+        LoginComponent
 
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

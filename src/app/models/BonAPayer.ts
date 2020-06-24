@@ -14,5 +14,9 @@ export class BonAPayer {
     RaisonSocial: string;
     NomPrenom: string;
 
+    //les informations de reglement
+    NumReglement: number;
+    EcheanceReglement?: Date;
+
 
 }

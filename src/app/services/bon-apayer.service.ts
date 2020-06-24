@@ -16,4 +16,9 @@ export class BonAPayerService {
     Update(data: BonAPayer): Observable<BonAPayer> {
         return this.http.put<BonAPayer>(`${environment.apiUrl}/api/BonAPayer`, data);
     }
+
+    GetReglementRecuperes(): Observable<BonAPayer[]> {
+        return this.http.get<BonAPayer[]>(`${environment.apiUrl}/api/BonAPayer/GetBonsRecuperes`);
+    }
+
 }
