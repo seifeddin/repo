@@ -13,6 +13,7 @@ import { FactureComponent } from '../../facture/facture.component';
 import { ReglementComponent } from '../../reglement/reglement.component';
 import { ReglementListComponent } from 'app/reglement-list/reglement-list.component';
 import { AdministrationComponent } from 'app/administration/administration.component';
+import { BonAPayerComponent } from 'app/bon-apayer/bon-apayer.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -69,5 +70,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'facture', component: FactureComponent },
     { path: 'reglement', component: ReglementComponent },
     { path: 'reglement-list', component: ReglementListComponent },
-    { path: 'administration', component: AdministrationComponent }
+    { path: 'administration', component: AdministrationComponent },
+    { path: 'bon-apayer', component: BonAPayerComponent }
 ];

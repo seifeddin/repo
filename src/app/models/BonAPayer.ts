@@ -7,4 +7,12 @@ export class BonAPayer {
     DateValidation?: Date;
     DateSignature?: Date;
     EstRegle?: boolean;
+    EstValide?: boolean;
+
+    //les information de fournisseur
+    NumFRs: number;
+    RaisonSocial: string;
+    NomPrenom: string;
+
+
 }

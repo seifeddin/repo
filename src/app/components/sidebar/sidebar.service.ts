@@ -29,6 +29,22 @@ export class SidebarService {
                     path: '/reglement-list',
                 }
             ]
+        },
+        {
+            title: 'Situation Règlements',
+            icon: 'fa fa-shopping-cart',
+            active: false,
+            type: 'dropdown',
+            submenus: [
+                {
+                    title: 'Signature',
+                    path: '/bon-apayer',
+                },
+                {
+                    title: 'Recupération',
+                    path: '/reglement-list',
+                }
+            ]
         }
     ];
     constructor() { }
