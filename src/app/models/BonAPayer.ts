@@ -1,5 +1,6 @@
 export class BonAPayer {
     Id: number;
+    IdReglement: number;
     MontantRetenu?: number;
     MontantTotalEcheance?: number;
     NetAPayer?: number;

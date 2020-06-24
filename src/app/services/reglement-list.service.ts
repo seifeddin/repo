@@ -28,10 +28,18 @@ export class ReglementListService {
         return this.http.get<Supplier>(`${environment.apiUrl}/api/Fournisseur/GetFournisseur/` + id);
     }
 
+    GetMontantRegelement(id: number): Observable<number> {
+
+        return this.http.get<number>(`${environment.apiUrl}/api/Reglement/GetMontantRegelement/` + id);
+    }
+    GetTotalMontantRetenu(id: number): Observable<number> {
+        return this.http.get<number>(`${environment.apiUrl}/api/Reglement/GetTotalMontantRetenu/` + id);
+    }
     AddBonAPayer(bon: BonAPayer): Observable<BonAPayer> {
         return this.http.post<BonAPayer>(`${environment.apiUrl}/api/BonAPayer/`, bon)
     }
     UpdateReglement(reg: Reglement): Observable<Reglement> {
+
         return this.http.put<Reglement>(`${environment.apiUrl}/api/Reglement`, reg);
     }
     getLookupRubrique(): Observable<any> {
