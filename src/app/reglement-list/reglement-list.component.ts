@@ -14,6 +14,7 @@ import { RetenuParams } from 'app/models/RetenuParams';
 import { ModalRetenuComponent } from './modal-retenu/modal-retenu.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from 'app/services/notification.service';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { NotificationService } from 'app/services/notification.service';
 })
 export class ReglementListComponent implements OnInit {
     // public displayedColumns = ['Id', 'IdBonAPayer', 'NumFrs', 'NumPreparation', 'IdRetenu', 'Date', 'Montant'];
-    public displayedColumns = ['Id', 'IdBonAPayer', 'NumPreparation', 'IdRetenu', 'DateValidation'];
+    public displayedColumns = ['Id', 'DateValidation', 'IdBonAPayer', 'IdRetenu'];
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     public dataSource = new MatTableDataSource<Reglement>();
@@ -48,6 +49,7 @@ export class ReglementListComponent implements OnInit {
     ngOnInit(): void {
         this.reglement = new Reglement();
         this.service.getLookupFournisseur().subscribe((res) => {
+            console.log(res);
             this.lstSuppliers = res.map((item: { Id: number; Designation: string; }) => new Lookup(item.Id, item.Designation));
         });
         //this.GetAllReglement();
@@ -78,24 +80,53 @@ export class ReglementListComponent implements OnInit {
             // tslint:disable-next-line:radix
 
             // tslint:disable-next-line:radix
-            return this.lstSuppliers.filter(option => option.Id === Number.parseInt(value));
+            return this.lstSuppliers.filter(option => option.Designation.toLowerCase().startsWith(_.toLower(value)));
         }
     }
 
-    getList(IdFrs) {
+    getList(value) {
+        let IdFrs = this.lstSuppliers.filter(val => val.Designation === value)[0].Id;
         this.selectedFrs = IdFrs;
         this.GetData(IdFrs);
     }
 
     GetData(value) {
+        console.log(this.lstSuppliers);
         this.service.GetAllByFrs(value).subscribe(x => {
             this.dataSource.data = x;
         });
     }
 
     Generate() {
-        this.bonAPayer = new BonAPayer();
-        this.bonAPayer.DateValidation = new Date();
+        if (this.selection.selected[0].IdRetenu) {
+
+            if (this.selection.selected[0].IdBonAPayer) {
+                this.toastService.showError("Réglement déjà généré action impossible",
+                    "Erreur De Génération");
+                return 0;
+            }
+            this.bonAPayer = new BonAPayer();
+            this.bonAPayer.DateValidation = new Date();
+            this.service.GetTotalMontantRetenu(this.selection.selected[0].Id).subscribe(res => {
+                this.bonAPayer.MontantRetenu = res;
+                this.service.GetMontantRegelement(this.selection.selected[0].Id).subscribe(res => {
+
+                    this.bonAPayer.MontantTotalEcheance = res;
+                    this.bonAPayer.NetAPayer = this.bonAPayer.MontantTotalEcheance - this.bonAPayer.MontantRetenu;
+                    this.bonAPayer.IdReglement = this.selection.selected[0].Id;
+                    this.service.AddBonAPayer(this.bonAPayer).subscribe(res => {
+                        this.toastService.showSuccess("Génération affectué avec succès", "Information")
+                        this.GetData(this.selectedFrs);
+                    });
+                });
+            });
+
+        }
+        else {
+            this.toastService.showError("Il faut enregistré un retune pour cet réglement avant le généré",
+                "Erreur De Génération");
+        }
+
 
 
         //  this.service.AddBonAPayer();

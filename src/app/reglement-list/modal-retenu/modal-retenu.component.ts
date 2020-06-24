@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SweetAlertService } from 'angular-sweetalert-service';
 import Swal from 'sweetalert2';
 import { Retenu } from 'app/models/Retenu';
+import { Reglement } from 'app/models/Reglement';
 
 @Component({
     selector: 'app-modal-retenu',
@@ -70,11 +71,16 @@ export class ModalRetenuComponent implements OnInit {
     GetData() {
         this.dataSource.data = this.rubRetenus;
     }
-
+    onTvaChange(value) {
+        if (this.rowData.Tva) {
+            this.rowData.MontantTtc = this.rowData.MontantHt * (this.rowData.Tva / 100);
+        }
+    }
     Add() {
         this.formGroupRubrique.enable();
         this.operation = 'Create';
         this.rowData = new RubriqueRetenu();
+        this.serviceReglement.GetMontantRegelement(this.data.Reglement.Id).subscribe(res => this.rowData.MontantHt = res);
 
     }
     Edit() {
@@ -88,7 +94,7 @@ export class ModalRetenuComponent implements OnInit {
     }
     Save() {
         Swal.fire({
-            title: 'Voulez vous enregistré ce détail de règlement?',
+            title: 'Voulez vous enregistré ce retenu?',
             icon: 'warning',
             showCancelButton: true,
         }).then((result) => {
@@ -101,7 +107,7 @@ export class ModalRetenuComponent implements OnInit {
 
                         this.rubRetenus.push(this.rowData);
                         Swal.fire(
-                            'Enregistrement règlement effectué avec succés',
+                            'Enregistrement retrnu effectué avec succés',
                             'success'
                         )
                         console.log(this.rubRetenus);
@@ -118,7 +124,7 @@ export class ModalRetenuComponent implements OnInit {
                     }
                     this.rubRetenus.push(this.rowData);
 
-                    Swal.fire('Enregistrement règlement effectué avec succés',
+                    Swal.fire('Enregistrement retenu effectué avec succés',
                         'success')
                     this.GetData();
 
@@ -137,7 +143,7 @@ export class ModalRetenuComponent implements OnInit {
 
         if (this.selection.selected.length > 0) {
             Swal.fire({
-                title: 'Voulez vous supprimer ce détail de règlement?',
+                title: 'Voulez vous supprimer ce retenu?',
                 icon: 'warning',
                 showCancelButton: true,
             }).then((result) => {
@@ -147,7 +153,7 @@ export class ModalRetenuComponent implements OnInit {
                         this.rubRetenus.splice(index, 1);
                     }
                     Swal.fire(
-                        'Préparation règlement supprimé avec succés',
+                        'Retenu supprimé avec succés',
                         'success'
                     )
                     this.GetData();
@@ -173,6 +179,8 @@ export class ModalRetenuComponent implements OnInit {
         this.retenu.NumeroCertficat = 1;
         this.retenu.DateValidation = new Date();
         this.retenu.ValiderPar = 'Aida';
+        this.retenu.IdReglement = this.data.Reglement.Id;
+        /*this.retenu.Reglement.Id = this.data.Reglement.Id;*/
         //   this.retenu.Reglement = [];
         let AddedRetenu: Retenu;
         this.serviceReglement.AddRetenu(this.retenu).subscribe(x => {
