@@ -28,6 +28,7 @@ import { ModalRolefonctionnelComponent } from 'app/rolefonctionnel/modal-rolefon
 import { ModalRetenuComponent } from 'app/reglement-list/modal-retenu/modal-retenu.component';
 // nouvel Modal Ajouter attention git
 import { ModalAffiliationRoleComponent } from 'app/roletechnique/modal-affiliation-role/modal-affiliation-role.component';
+import { BonAPayerComponent } from 'app/bon-apayer/bon-apayer.component';
 
 
 
@@ -61,6 +62,7 @@ import { ModalAffiliationRoleComponent } from 'app/roletechnique/modal-affiliati
         ModalRolefonctionnelComponent,
         ModalRetenuComponent,
         ModalAffiliationRoleComponent,// nouvel Modal Ajouter attention git
+        BonAPayerComponent,
 
     ]
 })
