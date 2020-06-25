@@ -22,15 +22,18 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        
+
         return this.http.post<any>(`http://localhost:52549/api/Account/GetToken`, { username, password })
             .pipe(map(user => {
-                
+
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
-                user.authdata = window.btoa(username + ':' + password);
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-                return user;
+                if (user) {
+                    user.authdata = window.btoa(username + ':' + password);
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.currentUserSubject.next(user);
+                    return user;
+                }
+                throw new Error('Nom utilisateur ou mot de passe inconnu, vous pouvez essayez !');
             }));
     }
 

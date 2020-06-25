@@ -5,11 +5,11 @@
         <div class="card">
           <div class="card-header card-header-danger">
             <h4 class="card-title ">Signature des Réglements Fournisseurs</h4>
-            
+
           </div>
           <div class="card-body">
             <div class="button-row float-right">
-              <button mat-stroked-button class="btn btn-primary mr-2" (click)="Validate()">Valider</button>
+              <button mat-stroked-button class="btn btn-primary mr-2" (click)="Validate()">Signer</button>
             </div>
           </div>
           <div class="table-responsive">
@@ -29,19 +29,19 @@
               <ng-container matColumnDef="NomPrenom">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Fournisseur</th>
                 <td mat-cell *matCellDef="let element"> {{element.NomPrenom}} </td>
-                <td mat-footer-cell *matFooterCellDef>  </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
               </ng-container>
 
-               <ng-container matColumnDef="NumReglement">
+              <ng-container matColumnDef="NumReglement">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> N Reglement</th>
                 <td mat-cell *matCellDef="let element"> {{element.NumReglement}} </td>
-                <td mat-footer-cell *matFooterCellDef>  </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
               </ng-container>
 
-               <ng-container matColumnDef="EcheanceReglement">
+              <ng-container matColumnDef="EcheanceReglement">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Echeance</th>
                 <td mat-cell *matCellDef="let element"> {{element.EcheanceReglement |date}} </td>
-                <td mat-footer-cell *matFooterCellDef>  </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
               </ng-container>
 
 
@@ -59,14 +59,14 @@
               </ng-container>
 
 
- <ng-container matColumnDef="EstValide">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Validé </th>
-                    <td mat-cell *matCellDef="let element">
-                      <mat-checkbox [checked]="element.EstValide" disabled=true>
-                      </mat-checkbox>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef> </td>
-                  </ng-container>
+              <ng-container matColumnDef="EstValide">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Validé </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-checkbox [checked]="element.EstValide" disabled=true>
+                  </mat-checkbox>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
 
               <ng-container matColumnDef="DateValidation">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Validation</th>
@@ -82,7 +82,7 @@
                 <td mat-footer-cell *matFooterCellDef> </td>
               </ng-container>
 
-            
+
 
               <ng-container matColumnDef="select">
                 <th mat-header-cell *matHeaderCellDef>
@@ -108,7 +108,7 @@
                 (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
               <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
             </table>
-            <mat-paginator [pageSize]="2" [pageSizeOptions]="[2, 4, 6, 10, 20]">
+            <mat-paginator [pageSize]="5" [pageSizeOptions]="[2, 5, 6, 10, 20]">
             </mat-paginator>
           </div>
         </div>

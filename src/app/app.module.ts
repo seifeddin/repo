@@ -19,6 +19,7 @@ import { BasicAuthInterceptor, ErrorInterceptor } from './helpers';
 import { SweetAlertService } from 'angular-sweetalert-service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserModule } from '@angular/platform-browser';
+import { SuiviBancaireComponent } from './suivi-bancaire/suivi-bancaire.component';
 
 
 
@@ -44,7 +45,7 @@ import { BrowserModule } from '@angular/platform-browser';
     declarations: [
         AppComponent,
         AdminLayoutComponent,
-        LoginComponent
+        LoginComponent,
 
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

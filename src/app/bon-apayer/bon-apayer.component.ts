@@ -5,6 +5,7 @@ import { BonAPayer } from 'app/models/BonAPayer';
 import { MatTableDataSource } from '@angular/material/table';
 import { BonAPayerService } from 'app/services/bon-apayer.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-bon-apayer',
@@ -40,9 +41,25 @@ export class BonAPayerComponent implements OnInit {
         this.selectedRow = row;
     }
     Validate() {
-        this.selectedRow.DateValidation = new Date();
-        this.selectedRow.ValiderPar = "Aida";
-        this.service.Update(this.selectedRow).subscribe(x => { this.GetData(); return x; });
+        Swal.fire({
+            title: 'Voulez vous signé ce règlement ?',
+            icon: 'warning',
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.value) {
+                this.selectedRow.DateValidation = new Date();
+                this.selectedRow.DateSignature = new Date();
+                this.selectedRow.ValiderPar = "Aida";
+                this.service.Update(this.selectedRow).subscribe(x => { this.GetData(); return x; });
+                Swal.fire('Règlement signé avec succés',
+                    'success')
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Singature Annulé',
+                    'error'
+                )
+            }
+        });
     }
 
     TotalSolde() {

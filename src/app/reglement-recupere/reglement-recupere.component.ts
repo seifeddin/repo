@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { BonAPayer } from 'app/models/BonAPayer';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BonAPayerService } from 'app/services/bon-apayer.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-reglement-recupere',
@@ -15,7 +16,7 @@ export class ReglementRecupereComponent implements OnInit {
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    public displayedColumns = ['Id', 'NumFRs', 'NomPrenom', 'MontantRetenu', 'MontantTotalEcheance', 'EstValide', 'DateValidation', 'ValiderPar'];
+    public displayedColumns = ['Id', 'NumFRs', 'NomPrenom', 'MontantRetenu', 'MontantTotalEcheance', 'EstRegle', 'EstValide', 'DateValidation', 'ValiderPar'];
     public dataSource = new MatTableDataSource<BonAPayer>();
     selection = new SelectionModel<BonAPayer>(false, []);
     selectedRow: BonAPayer;
@@ -34,14 +35,31 @@ export class ReglementRecupereComponent implements OnInit {
     GetData() {
         this.service.GetReglementRecuperes().subscribe(x => {
             this.dataSource.data = x
+            console.log(x);
         });
     }
     getObject(row: BonAPayer) {
         this.selectedRow = row;
     }
     Validate() {
-        this.selectedRow.EstRegle = true;
-        this.service.Update(this.selectedRow).subscribe(x => { this.GetData(); return x; });
+        Swal.fire({
+            title: 'Voulez vous confirmez ce règlement ?',
+            icon: 'warning',
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.value) {
+                this.selectedRow.EstRegle = true;
+                this.service.Update(this.selectedRow).subscribe(x => { this.GetData(); return x; });
+                Swal.fire('Règlement confirmé avec succés',
+                    'success')
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Confirmation Annulé',
+                    'error'
+                )
+            }
+        });
+
     }
 
     TotalSolde() {

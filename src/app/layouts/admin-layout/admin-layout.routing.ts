@@ -15,6 +15,7 @@ import { ReglementListComponent } from 'app/reglement-list/reglement-list.compon
 import { AdministrationComponent } from 'app/administration/administration.component';
 import { BonAPayerComponent } from 'app/bon-apayer/bon-apayer.component';
 import { ReglementRecupereComponent } from 'app/reglement-recupere/reglement-recupere.component';
+import { SuiviBancaireComponent } from 'app/suivi-bancaire/suivi-bancaire.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -74,4 +75,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'administration', component: AdministrationComponent },
     { path: 'bon-apayer', component: BonAPayerComponent },
     { path: 'reglement-recupere', component: ReglementRecupereComponent },
+    { path: 'suivi-bancaire', component: SuiviBancaireComponent }
 ];

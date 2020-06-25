@@ -32,7 +32,7 @@ export class SidebarService {
         },
         {
             title: 'Situation Règlements',
-            icon: 'fa fa-shopping-cart',
+            icon: 'fas fa-balance-scale-right',
             active: false,
             type: 'dropdown',
             submenus: [
@@ -44,6 +44,18 @@ export class SidebarService {
                     title: 'Recupération',
                     path: '/reglement-recupere',
                 }
+            ]
+        },
+        {
+            title: 'Suivi Bancaire',
+            icon: 'fas fa-money-check',
+            active: true,
+            type: 'dropdown',
+            submenus: [
+                {
+                    title: 'Suivi',
+                    path: '/suivi-bancaire',
+                },
             ]
         }
     ];
