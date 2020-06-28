@@ -64,28 +64,19 @@ export class ReglementListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
     }
     GetAllReglement() {
-
         this.dataSource.data = [];
-        // this.service.GetAllByFrs(1)
-        //     .subscribe(res => {
-        //         console.log(res);
-        //         this.lstReglement = res;
-        //         this.dataSource.data = res as Reglement[];
-        //     });
     }
 
     // autocomplete filter treatment
     private _filter(value: string): Lookup[] {
         if (this.lstSuppliers !== undefined) {
             // tslint:disable-next-line:radix
-
-            // tslint:disable-next-line:radix
             return this.lstSuppliers.filter(option => option.Designation.toLowerCase().startsWith(_.toLower(value)));
         }
     }
 
     getList(value) {
-        let IdFrs = this.lstSuppliers.filter(val => val.Designation === value)[0].Id;
+        const IdFrs = this.lstSuppliers.filter(val => val.Designation === value)[0].Id;
         this.selectedFrs = IdFrs;
         this.GetData(IdFrs);
     }
@@ -123,22 +114,18 @@ export class ReglementListComponent implements OnInit {
 
         }
         else {
-            this.toastService.showError("Il faut enregistré un retune pour cet réglement avant le généré",
+            this.toastService.showError("Il faut enregistré un retenu pour cet réglement avant le généré",
                 "Erreur De Génération");
         }
-
-
-
-        //  this.service.AddBonAPayer();
-        //this.service.UpdateReglement()
     }
+
     AddRetenu() {
         if (this.SelectedRow.Id !== undefined || this.SelectedRow.Id !== NaN) {
             this.params = new RetenuParams();
             this.params.DateValidation = new Date(null);
             this.params.Reglement = this.SelectedRow;
 
-            this.service.GetFrsById(1).subscribe(x => {
+            this.service.GetFrsById(this.SelectedRow.Id).subscribe(x => {
                 this.params.NomPrenom = x.Nom + '' + x.Prenom;
                 this.params.EstMorale = x.EstPhysique; this.params.EstMorale = x.EstMorale;
                 this.params.NumFrs = x.Id;
@@ -161,14 +148,12 @@ export class ReglementListComponent implements OnInit {
     }
 
     getObject(row: Reglement) {
-        debugger;
-        console.log(row.IdRetenu);
+
         if (row.IdRetenu == null) {
             this.isDisabled = false;
         } else {
             this.isDisabled = true;
         }
-
         this.SelectedRow = row;
         this.reglement.Id = row.Id;
         this.reglement.Echeance = row.Echeance;
@@ -181,7 +166,6 @@ export class ReglementListComponent implements OnInit {
         this.reglement.NumFrs = row.NumFrs;
         this.reglement.NumPreparation = row.NumPreparation;
         this.reglement.ValiderPar = row.ValiderPar;
-
     }
 
 }

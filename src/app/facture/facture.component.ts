@@ -17,7 +17,6 @@ import { stringify } from 'querystring';
 import { ReglementFacture } from 'app/models/ReglementFacture';
 import { ReglementPrams } from 'app/models/ReglementParams';
 
-
 @Component({
     selector: 'app-facture',
     templateUrl: './facture.component.html',
@@ -40,7 +39,6 @@ export class FactureComponent implements OnInit {
     constructor(private route: ActivatedRoute, private service: FactureService, public dialog: MatDialog,
         private toast: NotificationService, private authentificate: AuthenticationService) {
         this.route.queryParams.subscribe(params => {
-            console.log(params.Id);
             this.IdFournisseur = params.Id;
         });
     }
@@ -69,8 +67,6 @@ export class FactureComponent implements OnInit {
         this.editRowId = null;
     }
 
-
-
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
         const numSelected = this.selection.selected.length;
@@ -98,9 +94,7 @@ export class FactureComponent implements OnInit {
     Validate() {
         // tslint:disable-next-line:label-position
         if (this.selection.selected.length) {
-
             const montant: number[] = [];
-
             this.selection.selected.forEach(x => { montant.push(Number(x.MontantAPayes)); });
             const montantTotal: number = montant.reduce((a, b) => a + b, 0);
             if (montantTotal > 0) {
@@ -118,11 +112,12 @@ export class FactureComponent implements OnInit {
                     //Ajout dans Table Facture l'id de resglement associés avec les id des factures selectioonées 
 
                     const regFactures: ReglementFacture[] = [];
+                    console.log(this.selection.selected);
                     this.selection.selected.forEach(x => {
                         const fact: ReglementFacture = new ReglementFacture();
                         fact.IdFacture = x.Id;
                         fact.IdReglement = this.idReglement;
-                        fact.MontantTotal = x.MontantAPayes;
+                        fact.MontantTotale = x.MontantAPayes;
                         this.service.AddReglementFacture(fact).subscribe(x => {
                             return x;
                         });

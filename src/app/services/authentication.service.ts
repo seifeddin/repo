@@ -22,10 +22,9 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-
         return this.http.post<any>(`http://localhost:52549/api/Account/GetToken`, { username, password })
             .pipe(map(user => {
-
+                console.log(user);
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
                 if (user) {
                     user.authdata = window.btoa(username + ':' + password);

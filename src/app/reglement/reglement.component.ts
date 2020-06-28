@@ -53,7 +53,6 @@ export class ReglementComponent implements OnInit {
 
         });
         this.formGroup.disable();
-
         this.service.getLookupModeReglement().subscribe(x => { this.modeReglement = x });
         this.service.getLookupBanque().subscribe(x => { this.banques = x });
         this.service.getLookupCaisse().subscribe(x => { this.caisses = x });
